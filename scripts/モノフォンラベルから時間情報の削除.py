@@ -24,16 +24,16 @@ def main():
     for i in range(5000):
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
-        input_path = './labels/04_新時間情報モノフォンラベル/BASIC5000_' + index + '.lab'
-        output_path = './labels/05_時間情報のみ/BASIC5000_' + index + '.lab'
+        input_path = './labels/03_新時間情報モノフォンラベル/BASIC5000_' + index + '.lab'
+        output_path = './labels/04_時間情報のみ/BASIC5000_' + index + '.lab'
 
-        with open(input_path, 'rt') as f:
+        with open(input_path, 'rt') as input_file:
             # ラベルデータの読み込み
-            array = list(csv.reader(f, delimiter = ' ')) # label データを 2 次元配列に格納
+            array = list(csv.reader(input_file, delimiter = ' ')) # label データを 2 次元配列に格納
             for row in array: del row[2] # ラベル情報 (3 列目) の削除
             # ラベルデータの書き出し
-            with open(output_path, 'wt') as g:
-                writer = csv.writer(g, delimiter=' ', lineterminator='\n')
+            with open(output_path, 'wt') as output_file:
+                writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
                 writer.writerows(array)
 
 if __name__ == "__main__":

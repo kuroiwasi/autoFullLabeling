@@ -9,10 +9,11 @@ Linux mint 20.3 edge
 ## どうやって使うの
 ### 事前準備
 #### 外部ツール
-以下のディレクトリ構造になるようにファイルをセットして LABELING.bash を実行すれば O.K. です。必要なファイルはリンクをおいておくので各自解凍してセットしてください。<br>
+以下のディレクトリ構造になるようにファイルをセットし、一部設定を変更して LABELING.bash を実行すれば O.K. です。必要なファイルはリンクをおいておくので各自解凍してセットしてください。<br>
 - [JSUT コーパス](https://sites.google.com/site/shinnosuketakamichi/publication/jsut): /corpus/jsut_ver1.1/
 - [Julius](https://julius.osdn.jp/index.php?q=newjulius.html): /tools/julius/
-- [音素セグメンテーションキット](https://julius.osdn.jp/index.php?q=ouyoukit.html): /tool/segmentation-kit/
+- [音素セグメンテーションキット](https://julius.osdn.jp/index.php?q=ouyoukit.html): /tools/segmentation-kit/
+変更する必要がある設定: `segmentation-kit/segment_julius.pl` の `## julius executable` にある else 文のパスを `$juliusbin="../julius_bin/julius/julius";` に変更
 #### Python ライブラリ
 このプログラムは Python 上で実行するので、以下のライブラリが必要です。お好みのパッケージマネージャでインストールしてください。そのうち必要ライブラリをまとめた requirement.txt とか追加します。
 - numpy
@@ -28,14 +29,9 @@ ex. 123 番の台本の場合: BASIC5000_0123.wav
 $ bash LABELING.bash
 ```
 
-DNNTTS with YourVoice のルートディレクトリに移動して以上のコマンドを実行してください。そうすると
-```
-/labels/06_時間情報付きフルコンテキストラベル
-```
-に音素境界付きフルコンテキストラベルが出力されます。<br>
+DNNTTS with YourVoice のルートディレクトリに移動して以上のコマンドを実行してください。そうすると `/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。<br>
 
 ## 今後の予定
-- 0.0.2: 表示バグ等の修正
 - 0.0.3: require.txt の追加
 - 0.1.0: LABELING を bash から Python に移行
 - 0.2.0: 必要な外部ソフトウェアを自動でダウンロードするように変更
