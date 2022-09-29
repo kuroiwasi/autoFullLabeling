@@ -25,7 +25,7 @@ def main():
     for i in range(5000):
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
-        label_path = './labels/02_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
+        label_path = './labels/01_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
         time_path = './labels/04_時間情報のみ/BASIC5000_' + index + '.lab'
         output_path = './labels/05_時間情報付きフルコンテキストラベル/BASIC5000_' + index + '.lab'
 

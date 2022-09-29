@@ -28,7 +28,7 @@ def main():
         input_path = './wav/BASIC5000_' + index + '.wav'
         output_path = './tools/segmentation-kit/wav/BASIC5000_' + index + '.wav'
         # sr: 16kHz, rate: 16bit の PCM 形式に音声を変換して出力
-        y, sr = librosa.load(input_path, sr=16000, mono=True)
+        y, sr = librosa.core.load(input_path, sr=16000, mono=True)
         sf.write(output_path, y, sr, subtype='PCM_16')
 
 if __name__ == '__main__':

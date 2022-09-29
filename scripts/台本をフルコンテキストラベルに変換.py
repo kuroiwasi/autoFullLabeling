@@ -32,7 +32,7 @@ def main():
             array[i] = array[i][15:]
             # 出力ファイルの設定
             index = n2i.num2index(i + 1)
-            output_path = './labels/02_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
+            output_path = './labels/01_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
             
             # フルコンテキストラベルの生成
             full_labels = poj.extract_fullcontext(array[i])
