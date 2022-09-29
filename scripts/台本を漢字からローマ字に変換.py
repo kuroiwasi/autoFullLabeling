@@ -22,7 +22,8 @@ import num2index as n2i
 
 def main():
     # 入力データの読み込み
-    with open('./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt', 'rt') as input_file:
+    input_path = './corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
+    with open(input_path, 'rt') as input_file:
         # 漢字台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
         for i in range(5000):
