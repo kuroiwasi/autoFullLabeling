@@ -1,4 +1,4 @@
-# DNNTTS-with-YourVoice ver. 0.0.1
+# DNNTTS-with-YourVoice ver. 0.0.2
 ## 既知のバグ
 - step 番号が 1 ずつずれている (表示が異常なだけで処理は正常に動作します)
 ## これはなに
