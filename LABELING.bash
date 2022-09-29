@@ -23,23 +23,23 @@ for index in ${dir_name[@]}; do
     if [ -d ${index} ]; then rm -rf ${index}; fi
 done
 mkdir ./log/ ./labels/ ./tools/segmentation-kit/wav/
-mkdir ./labels/02_時間情報削除済みラベル/
-mkdir ./labels/03_ローマ字台本/ ./labels/04_新時間情報モノフォンラベル/
-mkdir ./labels/05_時間情報のみ/ ./labels/06_時間情報付きフルコンテキストラベル
+mkdir ./labels/01_時間情報削除済みラベル/
+mkdir ./labels/02_ローマ字台本/ ./labels/03_新時間情報モノフォンラベル/
+mkdir ./labels/04_時間情報のみ/ ./labels/05_時間情報付きフルコンテキストラベル
 
-# step 2: 台本からフルコンテキストラベルの取り出し
-echo 'step 2: 台本からフルコンテキストラベの取り出し'
+# step 1: 台本からフルコンテキストラベルの取り出し
+echo 'step 1: 台本からフルコンテキストラベの取り出し'
 python3 ./scripts/台本をフルコンテキストラベルに変換.py
 
-# step 3: julius 用のローマ字台本ファイル作成
-echo 'step 3: julius 用のローマ字台本ファイル作成'
+# step 2: julius 用のローマ字台本ファイル作成
+echo 'step 2: julius 用のローマ字台本ファイル作成'
 python3 ./scripts/台本を漢字からローマ字に変換.py
 
-# step 4: julius を利用した強制音素アライメント
-echo 'step 4: julius を利用した強制音素アライメント'
+# step 3: julius を利用した強制音素アライメント
+echo 'step 3: julius を利用した強制音素アライメント'
 cp ./labels/03_ローマ字台本/* ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
 # julius (音声認識ソフトウェア) のビルド
-cp -R ./tools/julius/ tools/julius_bin/ # コピーしてからビルドしたほうが管理が楽
+cp -R ./tools/julius/ ./tools/julius_bin/ # コピーしてからビルドしたほうが管理が楽
 cd ./tools/julius_bin/ && ./configure && make && cd ../../
 python3 ./scripts/音声ファイルをレート調整してコピー.py # 音声ファイルをコピー
 # 強制音素アライメントの生成
@@ -49,10 +49,10 @@ cd ../../
 # 生成されたデータをコピー
 cp ./tools/segmentation-kit/wav/*.lab ./labels/04_新時間情報モノフォンラベル/
 
-# step 5: 音素アライメントから時間情報の抽出
-echo 'step 5: 音素アライメントから時間情報の抽出'
+# step 4: 音素アライメントから時間情報の抽出
+echo 'step 4: 音素アライメントから時間情報の抽出'
 python3 ./scripts/モノフォンラベルから時間情報の削除.py
 
-# step 6: 新時間情報つきフルコンテキストラベルの作成
-echo 'step 6: 新時間情報付きフルコンテキストラベルの作成'
+# step 5: 新時間情報つきフルコンテキストラベルの作成
+echo 'step 5: 新時間情報付きフルコンテキストラベルの作成'
 python3 ./scripts/ファイルの結合.py

@@ -28,7 +28,7 @@ def main():
         for i in range(5000):
             # 出力ファイル名を設定
             index = n2i.num2index(i + 1)
-            output_path = './labels/03_ローマ字台本/BASIC5000_' + index + '.txt'
+            output_path = './labels/02_ローマ字台本/BASIC5000_' + index + '.txt'
             # 台本をローマ字に変換
             kanji = array[i][15:]
             roma = poj.g2p(kanji, kana=False)

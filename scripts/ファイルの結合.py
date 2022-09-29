@@ -26,8 +26,8 @@ def main():
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
         label_path = './labels/02_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
-        time_path = './labels/05_時間情報のみ/BASIC5000_' + index + '.lab'
-        output_path = './labels/06_時間情報付きフルコンテキストラベル/BASIC5000_' + index + '.lab'
+        time_path = './labels/04_時間情報のみ/BASIC5000_' + index + '.lab'
+        output_path = './labels/05_時間情報付きフルコンテキストラベル/BASIC5000_' + index + '.lab'
 
         with open(label_path, 'rt') as labeldata:
             with open(time_path, 'rt') as timedata:
