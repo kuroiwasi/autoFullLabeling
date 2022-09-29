@@ -29,15 +29,15 @@ def main():
         time_path = './labels/04_時間情報のみ/BASIC5000_' + index + '.lab'
         output_path = './labels/05_時間情報付きフルコンテキストラベル/BASIC5000_' + index + '.lab'
 
-        with open(label_path, 'rt') as labeldata:
-            with open(time_path, 'rt') as timedata:
+        with open(label_path, 'rt') as label_file:
+            with open(time_path, 'rt') as time_file:
                 # 各種データの読み込み
-                timearray = np.array(list(csv.reader(timedata, delimiter = ' ')))   # time データを 2 次元配列に格納
-                labelarray = np.array(list(csv.reader(labeldata, delimiter = ' '))) # label データを 2 次元配列に格納
-                array = np.concatenate([timearray, labelarray], axis=1)             # time と label を横に結合
+                time_array = np.array(list(csv.reader(time_file, delimiter = ' ')))   # time データを 2 次元配列に格納
+                label_array = np.array(list(csv.reader(label_file, delimiter = ' '))) # label データを 2 次元配列に格納
+                array = np.concatenate([time_array, label_array], axis=1)             # time と label を横に結合
                 # ラベルデータの書き出し
-                with open(output_path, 'wt') as f:
-                    writer = csv.writer(f, delimiter=' ', lineterminator='\n')
+                with open(output_path, 'wt') as output_file:
+                    writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
                     writer.writerows(array)
 
 if __name__ == "__main__":

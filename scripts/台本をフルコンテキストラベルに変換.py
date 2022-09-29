@@ -23,9 +23,9 @@ import pyopenjtalk as poj
 def main():
     # 入力ファイルの設定
     input_path = './corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
-    with open(input_path, 'rt') as f:
+    with open(input_path, 'rt') as input_file:
         # 台本データの読み込み
-        array = f.read().split('\n') # 台本データを 1 次元配列に格納
+        array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
         
         for i in range(5000):
             # 台本番号の削除
@@ -38,7 +38,8 @@ def main():
             full_labels = poj.extract_fullcontext(array[i])
             # ラベルデータの書き出し
             output_str = '\n'.join(full_labels) # 1 次元配列を改行文字列に変換
-            with open(output_path, 'wt') as g: g.write(output_str) # 書き出し
+            with open(output_path, 'wt') as output_file:
+                output_file.write(output_str) # 書き出し
 
 if __name__ == "__main__":
     main()
