@@ -1,6 +1,6 @@
 # DNNTTS-with-YourVoice ver. 0.0.2
 ## これはなに
-これは [ttslearn](https://github.com/r9y9/ttslearn) を用いた DNNTTS 学習のために必要な音素境界付きフルコンテキストラベルを、便利ツール (Julius) を使って、台本 (JSUT コーパス - BASIC5000) とその台本を読み上げた音声から生成するプログラムです。<br>
+これは [ttslearn](https://github.com/r9y9/ttslearn) を用いた DNNTTS 学習のために必要な時間情報付きフルコンテキストラベルを、便利ツール (Julius と pyopenjtalk) を使って、台本 (JSUT コーパス - BASIC5000) とその台本を読み上げた音声から生成するプログラムです。<br>
 動作確認は JSUT コーパス付属の音声を使って確かめたところ、ラベルの作成とそれを用いての合成音声生成までは確認しました。自分の声を用いての動作確認はまだしてないです、そのうちします。
 ## 作者の環境
 Linux mint 20.3 edge
