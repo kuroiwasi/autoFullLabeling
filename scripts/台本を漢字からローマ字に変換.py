@@ -21,7 +21,7 @@ import sys
 import pyopenjtalk as poj
 import num2index as n2i
 
-def main(input_path: str, output_dir: str):
+def main(input_path: str, output_dir: str) -> None:
     with open(input_path, 'rt') as input_file:
         # 漢字台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納

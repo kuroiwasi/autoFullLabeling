@@ -21,7 +21,7 @@ import sys
 import csv
 import num2index as n2i
 
-def main(input_dir, output_dir):
+def main(input_dir: str, output_dir: str) -> None:
     for i in range(5000):
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
