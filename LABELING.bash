@@ -36,7 +36,7 @@ cd ./tools/julius_bin/ && ./configure >> ../../log/00_configure.log 2>&1
 make >> ../../log/00_make.log 2>&1 && cd ../../
 
 # step 1: 台本からフルコンテキストラベルの取り出し
-echo 'step 1: 台本からフルコンテキストラベの取り出し'
+echo 'step 1: 台本からフルコンテキストラベルの取り出し'
 python3 ./scripts/台本をフルコンテキストラベルに変換.py
 
 # step 2: julius 用のローマ字台本ファイル作成
