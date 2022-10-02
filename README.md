@@ -28,9 +28,3 @@ $ bash LABELING.bash
 ```
 
 DNNTTS with YourVoice のルートディレクトリに移動して以上のコマンドを実行してください。そうすると `/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。<br>
-
-## 今後の予定
-- 0.0.3: requirements.txt の追加
-- 0.1.0: LABELING を bash から Python に移行
-- 0.2.0: 必要な外部ソフトウェアを自動でダウンロードするように変更
-- 1.0.0: ttslearn を用いて単体での TTS 実現
