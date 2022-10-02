@@ -26,7 +26,7 @@ done
 # directory of outputs for each step
 step_dir=('./labels/00' './labels/01_時間情報削除済みラベル/' \
 './labels/02_ローマ字台本/' './labels/03_新時間情報モノフォンラベル/' \
-'./labels/04_時間情報のみ/' './labels/05_時間情報付きフルコンテキストラベル')
+'./labels/04_時間情報のみ/' './labels/05_時間情報付きフルコンテキストラベル/')
 for index in ${step_dir[@]}; do mkdir ${index}; done
 # other variable
 jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
