@@ -17,15 +17,16 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 """
 
+import sys
 import csv
 import num2index as n2i
 
-def main():
+def main(input_dir: str, output_dir: str) -> None:
     for i in range(5000):
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
-        input_path = './labels/03_新時間情報モノフォンラベル/BASIC5000_' + index + '.lab'
-        output_path = './labels/04_時間情報のみ/BASIC5000_' + index + '.lab'
+        input_path = input_dir + index + '.lab'
+        output_path = output_dir + index + '.lab'
 
         with open(input_path, 'rt') as input_file:
             # ラベルデータの読み込み
@@ -37,4 +38,4 @@ def main():
                 writer.writerows(array)
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1], sys.argv[2])

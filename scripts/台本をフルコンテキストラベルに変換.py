@@ -17,12 +17,11 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 """
 
+import sys
 import num2index as n2i
 import pyopenjtalk as poj
 
-def main():
-    # 入力ファイルの設定
-    input_path = './corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
+def main(input_path: str, output_dir: str) -> None:
     with open(input_path, 'rt') as input_file:
         # 台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
@@ -32,7 +31,7 @@ def main():
             array[i] = array[i][15:]
             # 出力ファイルの設定
             index = n2i.num2index(i + 1)
-            output_path = './labels/01_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
+            output_path = output_dir + index + '.lab'
             
             # フルコンテキストラベルの生成
             full_labels = poj.extract_fullcontext(array[i])
@@ -42,4 +41,4 @@ def main():
                 output_file.write(output_str) # 書き出し
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1], sys.argv[2])

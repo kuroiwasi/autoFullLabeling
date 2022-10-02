@@ -17,19 +17,20 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 """
 
+import sys
 import librosa
 import soundfile as sf
 import num2index as n2i
 
-def main():
+def main(input_dir: str) -> None:
     for i in range(5000):
         # 入出力ファイル名を指定
         index = n2i.num2index(i + 1)
-        input_path = './wav/BASIC5000_' + index + '.wav'
-        output_path = './tools/segmentation-kit/wav/BASIC5000_' + index + '.wav'
+        input_path = input_dir + 'BASIC5000_' + index + '.wav'
+        output_path = './tools/segmentation-kit/wav/' + index + '.wav'
         # sr: 16kHz, rate: 16bit の PCM 形式に音声を変換して出力
         y, sr = librosa.core.load(input_path, sr=16000, mono=True)
         sf.write(output_path, y, sr, subtype='PCM_16')
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
