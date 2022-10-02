@@ -17,29 +17,26 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 """
 
+import sys
 import pyopenjtalk as poj
 import num2index as n2i
 
-def main():
-    # 入力データの読み込み
-    input_path = './corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
+def main(input_path: str, output_dir: str):
     with open(input_path, 'rt') as input_file:
         # 漢字台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
         for i in range(5000):
             # 出力ファイル名を設定
             index = n2i.num2index(i + 1)
-            output_path = './labels/02_ローマ字台本/BASIC5000_' + index + '.txt'
+            output_path = output_dir + index + '.txt'
             # 台本をローマ字に変換
             kanji = array[i][15:]
             roma = poj.g2p(kanji, kana=False)
-            # 動作が異なる記号の変換
-            roma = roma.replace('pau', 'sp')
-            roma = roma.replace('cl', 'q')
-            roma = roma.replace('v', 'b')
+            # julius と pyopenjtalk とで動作が異なる記号の変換
+            roma = roma.replace('pau', 'sp').replace('cl', 'q').replace('v', 'b')
             # ローマ字台本 (小文字) データの書き出し
             with open(output_path, 'wt') as output_file:
                 output_file.write(roma.lower()) # 書き出し
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1], sys.argv[2])

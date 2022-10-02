@@ -18,16 +18,17 @@ If not, see <https://www.gnu.org/licenses/>.
 """
 
 import csv
+import sys
 import numpy as np
 import num2index as n2i
 
-def main():
+def main(label_dir: str, time_dir: str, output_dir: str) -> None:
     for i in range(5000):
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
-        label_path = './labels/01_時間情報削除済みラベル/BASIC5000_' + index + '.lab'
-        time_path = './labels/04_時間情報のみ/BASIC5000_' + index + '.lab'
-        output_path = './labels/05_時間情報付きフルコンテキストラベル/BASIC5000_' + index + '.lab'
+        label_path = label_dir + index + '.lab'
+        time_path = time_dir + index + '.lab'
+        output_path = output_dir + 'BASIC5000_' + index + '.lab'
 
         with open(label_path, 'rt') as label_file:
             with open(time_path, 'rt') as time_file:
@@ -41,4 +42,4 @@ def main():
                     writer.writerows(array)
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
