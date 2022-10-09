@@ -1,0 +1,15 @@
+# doc: https://docs.docker.jp/compose/compose-file/compose-file-v3.html
+version: '3.8'
+services:
+  dockerenv:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: dockerenv
+    volumes:
+      - ./corpus/:/root/corpus/:rw
+      - ./scripts/:/root/scripts/:ro
+      - ./tools/:/root/tools/:rw
+      - ./wav/:/root/wav/:ro
+    tty: true
+    working_dir: /root/
