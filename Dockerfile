@@ -27,3 +27,6 @@ RUN pip install -r /root/requirements.txt
 
 # Install software from apt-get
 RUN apt-get install -y git
+
+# copy necessary files
+COPY LABELING.bash /root/
