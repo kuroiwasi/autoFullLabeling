@@ -26,5 +26,7 @@ services:
       - ./scripts/:/root/scripts/:ro
       - ./tools/:/root/tools/:rw
       - ./wav/:/root/wav/:ro
+      - ./log/:/root/log/:rw
+      - ./labels/:/root/labels/:rw
     tty: true
     working_dir: /root/

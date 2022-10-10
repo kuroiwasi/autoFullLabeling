@@ -26,7 +26,7 @@ COPY requirements.txt /root/
 RUN pip install -r /root/requirements.txt
 
 # Install software from apt-get
-RUN apt-get install -y git
+RUN apt-get install -y git libsndfile1
 
 # copy necessary files
 COPY LABELING.bash /root/
