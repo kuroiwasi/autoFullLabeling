@@ -38,8 +38,10 @@ log_file=('output_files/log/00_configure.log' 'output_files/log/00_make.log' \
 # step 0: julius (音声認識ソフト) のビルド
 echo 'step 0: julius のビルド'
 cp -R ./tools/julius/* ./tools/julius_bin/ # コピーしてからビルドしたほうが管理が楽
-cd ./tools/julius_bin/ && ./configure >> ../../${log_file[0]} 2>&1
-make >> ../../${log_file[1]} 2>&1 || cd ../../
+cd ./tools/julius_bin/
+./configure >> ../../${log_file[0]} 2>&1
+make >> ../../${log_file[1]} 2>&1
+cd ../../
 
 # step 1: 台本からフルコンテキストラベルの取り出し
 echo 'step 1: 台本からフルコンテキストラベルの取り出し'
@@ -51,7 +53,7 @@ python3 ./scripts/台本を漢字からローマ字に変換.py ${jsut_corpus} $
 
 # step 3: julius を利用した強制音素アライメント
 echo 'step 3: julius を利用した強制音素アライメント'
-cp ${step_dir[2]} ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
+cp ${step_dir[2]}/* ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
 python3 ./scripts/音声ファイルをレート調整してコピー.py ${wav_file}  # 音声ファイルをコピー
 # 強制音素アライメントの生成
 cd ./tools/segmentation-kit/
