@@ -22,11 +22,11 @@ services:
       dockerfile: ./Dockerfile
     container_name: dockerenv
     volumes:
+      - ./LABELING.bash:/root/LABELING.bash:ro
       - ./corpus/:/root/corpus/:rw
       - ./scripts/:/root/scripts/:ro
       - ./tools/:/root/tools/:rw
       - ./wav/:/root/wav/:ro
-      - ./log/:/root/log/:rw
-      - ./labels/:/root/labels/:rw
+      - ./output_files/:/root/output_files/:rw
     tty: true
     working_dir: /root/

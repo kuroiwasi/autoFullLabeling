@@ -1,8 +1,7 @@
 /wav/*
 /corpus/*
 /tools/*
-/labels/*
-/log/*
+/output_files/*
 /**/__pycache__
 .DS_Store
 /.devcontainer/
