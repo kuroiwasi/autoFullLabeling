@@ -32,8 +32,8 @@ for index in ${step_dir[@]}; do mkdir ${index}; done
 # other variable
 jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
 wav_file='./wav/'
-log_file=('output_files/log/00_configure.log' 'output_files/log/00_make.log' \
-'output_files/log/04_segment.log')
+log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
+'./output_files/log/04_segment.log')
 
 # step 0: julius (音声認識ソフト) のビルド
 echo 'step 0: julius のビルド'
