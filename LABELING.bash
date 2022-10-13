@@ -18,25 +18,30 @@ If not, see <https://www.gnu.org/licenses/>.
 LISENCE
 
 # reflesh of directory
-refresh_dir=('./labels/' './tools/segmentation-kit/wav/' './tools/julius_bin/' './log/')  
+refresh_dir=('./output_files/labels/' './output_files/log/' './tools/segmentation-kit/wav/' './tools/julius_bin/')  
 for index in ${refresh_dir[@]}; do
     if [ -d ${index} ]; then rm -rf ${index}; fi
     mkdir ${index}
 done
 # directory of outputs for each step
-step_dir=('./labels/00' './labels/01_時間情報削除済みラベル/' \
-'./labels/02_ローマ字台本/' './labels/03_新時間情報モノフォンラベル/' \
-'./labels/04_時間情報のみ/' './labels/05_時間情報付きフルコンテキストラベル/')
+step_dir=('./output_files/labels/00' './output_files/labels/01_時間情報削除済みラベル/' \
+'./output_files/labels/02_ローマ字台本/' './output_files/labels/03_新時間情報モノフォンラベル/' \
+'./output_files/labels/04_時間情報のみ/' './output_files/labels/05_時間情報付きフルコンテキストラベル/')
 for index in ${step_dir[@]}; do mkdir ${index}; done
+
 # other variable
 jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
 wav_file='./wav/'
+log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
+'./output_files/log/04_segment.log')
 
 # step 0: julius (音声認識ソフト) のビルド
 echo 'step 0: julius のビルド'
 cp -R ./tools/julius/* ./tools/julius_bin/ # コピーしてからビルドしたほうが管理が楽
-cd ./tools/julius_bin/ && ./configure >> ../../log/00_configure.log 2>&1
-make >> ../../log/00_make.log 2>&1 && cd ../../
+cd ./tools/julius_bin/
+./configure >> ../../${log_file[0]} 2>&1
+make >> ../../${log_file[1]} 2>&1
+cd ../../
 
 # step 1: 台本からフルコンテキストラベルの取り出し
 echo 'step 1: 台本からフルコンテキストラベルの取り出し'
@@ -48,11 +53,11 @@ python3 ./scripts/台本を漢字からローマ字に変換.py ${jsut_corpus} $
 
 # step 3: julius を利用した強制音素アライメント
 echo 'step 3: julius を利用した強制音素アライメント'
-cp ./labels/02_ローマ字台本/* ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
+cp ${step_dir[2]}/* ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
 python3 ./scripts/音声ファイルをレート調整してコピー.py ${wav_file}  # 音声ファイルをコピー
 # 強制音素アライメントの生成
 cd ./tools/segmentation-kit/
-perl ./segment_julius.pl >> ../../log/04_segment.log 2>&1
+perl ./segment_julius.pl >> ../../${log_file[2]} 2>&1
 cd ../../
 # 生成されたデータをコピー
 cp ./tools/segmentation-kit/wav/*.lab ${step_dir[3]}
