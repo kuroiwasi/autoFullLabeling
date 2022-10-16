@@ -27,15 +27,15 @@ $ bash LABELING.bash
 #### macOS
 ```bash
 # コンテナのビルド・起動
-% docker-compose up -d --build
-% docker-compose exec dnntts bash
+docker-compose up -d --build
+docker-compose exec dnntts bash
 
 # ラベリングの実行
-$ bash LABELING.bash
+bash LABELING.bash
 
 # コンテナの停止・削除
-$ exit
-% docker-compose down
+exit
+docker-compose down
 ```
 
 DNNTTS with YourVoice のルートディレクトリに移動して以上のコマンドを実行してください。そうすると `/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。<br>
@@ -48,7 +48,6 @@ DNNTTS with YourVoice のルートディレクトリに移動して以上のコ�
   * Copyright (c) 1997-2000 Information-technology Promotion Agency, Japan
   * Copyright (c) 2000-2005 Shikano Lab., Nara Institute of Science and Technology
   * Copyright (c) 2005-2020 Julius project team, Nagoya Institute of Technology
-  * All rights reserved.
 * [音素セグメンテーションキット](https://julius.osdn.jp/index.php?q=ouyoukit.html): `/tools/segmentation-kit/`
   * The MIT License (MIT): https://github.com/julius-speech/segmentation-kit/blob/master/License.md
   * Copyright (c) 2005-2015 Julius project team, Lee Lab., Nagoya Institute of Technology
