@@ -42,12 +42,13 @@ DNNTTS with YourVoice のルートディレクトリに移動して以上のコ�
 # 謝辞
 このプログラムは以下のプログラムを利用することで動作しています．<br>
 各製作者の方々，有難うございます．<br>
-* [Julius](https://julius.osdn.jp/index.php?q=newjulius.html): `/tools/segmentation-kit/julius-4.6`
+* [Julius](https://julius.osdn.jp/index.php?q=newjulius.html): `/tools/julius/`
   * BSD 3-Clause License
   * Copyright (c) 1991-2020 Kawahara Lab., Kyoto University
   * Copyright (c) 1997-2000 Information-technology Promotion Agency, Japan
   * Copyright (c) 2000-2005 Shikano Lab., Nara Institute of Science and Technology
   * Copyright (c) 2005-2020 Julius project team, Nagoya Institute of Technology
+  * All rights reserved.
 * [音素セグメンテーションキット](https://julius.osdn.jp/index.php?q=ouyoukit.html): `/tools/segmentation-kit/`
   * The MIT License (MIT)
   * Copyright (c) 2005-2015 Julius project team, Lee Lab., Nagoya Institute of Technology

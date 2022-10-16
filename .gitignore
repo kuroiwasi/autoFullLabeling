@@ -1,7 +1,6 @@
 /wav/*
 /corpus/*
 /output_files/*
-/tools/segmentation-kit/wav
 /**/__pycache__
 .DS_Store
 /.devcontainer/
