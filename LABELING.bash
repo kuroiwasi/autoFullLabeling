@@ -18,7 +18,7 @@ If not, see <https://www.gnu.org/licenses/>.
 LISENCE
 
 # reflesh of directory
-refresh_dir=('./output_files/labels/' './output_files/log/' './tools/segmentation-kit/wav/' './tools/julius_bin/')  
+refresh_dir=('./output_files/labels/' './output_files/log/' './tools/segmentation-kit/wav/')  
 for index in ${refresh_dir[@]}; do
     if [ -d ${index} ]; then rm -rf ${index}; fi
     mkdir ${index}
@@ -34,14 +34,6 @@ jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
 wav_file='./wav/'
 log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
 './output_files/log/04_segment.log')
-
-# step 0: julius (音声認識ソフト) のビルド
-echo 'step 0: julius のビルド'
-cp -R ./tools/julius/* ./tools/julius_bin/ # コピーしてからビルドしたほうが管理が楽
-cd ./tools/julius_bin/
-./configure >> ../../${log_file[0]} 2>&1
-make >> ../../${log_file[1]} 2>&1
-cd ../../
 
 # step 1: 台本からフルコンテキストラベルの取り出し
 echo 'step 1: 台本からフルコンテキストラベルの取り出し'
