@@ -22,7 +22,7 @@ ENV TERM=xterm
 
 # Install library from pip
 RUN apt-get install -y cmake
-COPY requirements.txt /root/
+COPY src/requirements.txt /root/
 RUN pip install -r /root/requirements.txt
 
 # Install software from apt-get
