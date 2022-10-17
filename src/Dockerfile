@@ -1,5 +1,5 @@
-# Copyright 2022 Fumiyoshi MATANO
-#
+## Copyright 2022 Fumiyoshi MATANO
+##
 ## This file is part of DNNTTS-With-YourVoice.
 ##
 ## DNNTTS-With-YourVoice is free software: you can redistribute it and/or modify it under
