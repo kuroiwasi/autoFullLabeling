@@ -18,27 +18,24 @@ If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
+import csv
 import num2index as n2i
-import pyopenjtalk as poj
 
-def main(input_path: str, output_dir: str) -> None:
-    with open(input_path, 'rt') as input_file:
-        # 台本データの読み込み
-        array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
-        
-        for i in range(5000):
-            # 台本番号の削除
-            array[i] = array[i][15:]
-            # 出力ファイルの設定
-            index = n2i.num2index(i + 1)
-            output_path = output_dir + index + '.lab'
-            
-            # フルコンテキストラベルの生成
-            full_labels = poj.extract_fullcontext(array[i])
+def main(list_row, input_dir, output_dir) -> None:
+    for i in range(int(list_row)):
+        # 入出力ファイル名を設定
+        index = n2i.num2index(i + 1)
+        input_path = input_dir + index + '.lab'
+        output_path = output_dir + index + '.lab'
+
+        with open(input_path, 'rt') as input_file:
+            # ラベルデータの読み込み
+            array = list(csv.reader(input_file, delimiter = ' ')) # label データを 2 次元配列に格納
+            for row in array: del row[2] # ラベル情報 (3 列目) の削除
             # ラベルデータの書き出し
-            output_str = '\n'.join(full_labels) # 1 次元配列を改行文字列に変換
             with open(output_path, 'wt') as output_file:
-                output_file.write(output_str) # 書き出し
+                writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
+                writer.writerows(array)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])

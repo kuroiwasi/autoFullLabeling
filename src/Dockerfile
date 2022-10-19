@@ -1,5 +1,5 @@
-# Copyright 2022 Fumiyoshi MATANO
-#
+## Copyright 2022 Fumiyoshi MATANO
+##
 ## This file is part of DNNTTS-With-YourVoice.
 ##
 ## DNNTTS-With-YourVoice is free software: you can redistribute it and/or modify it under
@@ -22,8 +22,8 @@ ENV TERM=xterm
 
 # Install library from pip
 RUN apt-get install -y cmake
-COPY requirements.txt /root/
+COPY requirements.txt /root/requirements.txt
 RUN pip install -r /root/requirements.txt
 
 # Install software from apt-get
-RUN apt-get install -y libsndfile1
+RUN apt-get install -y libsndfile1 libpulse0 libasound2

@@ -3,6 +3,8 @@
         "DNNTTS",
         "fullcontext",
         "jsut",
-        "pyopenjtalk"
+        "librosa",
+        "pyopenjtalk",
+        "soundfile"
     ]
 }
