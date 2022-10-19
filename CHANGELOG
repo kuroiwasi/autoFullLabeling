@@ -1,3 +1,9 @@
+version 0.1.0
+外部ソフトウェア, JSUT コーパス - BASIC5000 を同梱
+
+version 0.0.3d
+Dockerfile, docker-compose.yml の追加
+
 version 0.0.3
 typo の修正
 requirements.txt の追加
