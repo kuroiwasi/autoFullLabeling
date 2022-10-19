@@ -39,4 +39,4 @@ def main(list_row, input_path, output_dir) -> None:
                 output_file.write(roma.lower()) # 書き出し
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])

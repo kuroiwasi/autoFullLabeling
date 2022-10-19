@@ -26,4 +26,4 @@ COPY requirements.txt /root/requirements.txt
 RUN pip install -r /root/requirements.txt
 
 # Install software from apt-get
-RUN apt-get install -y libsndfile1
+RUN apt-get install -y libsndfile1 libpulse0 libasound2

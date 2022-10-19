@@ -19,8 +19,8 @@ LISENCE
 
 # コーパスのパス
 jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
-# コーパスの行数
-list_row=5000
+# コーパスの文章数
+list_row=1
 # 音声ファイルのパス
 wav_file='./wav/'
 
