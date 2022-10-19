@@ -26,7 +26,7 @@ def main(rmnum, input_path, output_path):
         # 漢字台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
         # 先頭 15 文字を削除
-        for i in range(len(array)): array[i] = array[i][rmnum:]
+        for i in range(len(array)): array[i] = array[i][int(rmnum):]
 
         # ラベルデータの書き出し
         output_str = '\n'.join(array) # 1 次元配列を改行文字列に変換
