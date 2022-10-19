@@ -22,8 +22,8 @@ import sys
 import numpy as np
 import num2index as n2i
 
-def main(label_dir: str, time_dir: str, output_dir: str) -> None:
-    for i in range(5000):
+def main(list_row, label_dir, time_dir, output_dir) -> None:
+    for i in range(int(list_row)):
         # 入出力ファイル名を設定
         index = n2i.num2index(i + 1)
         label_path = label_dir + index + '.lab'
@@ -42,4 +42,4 @@ def main(label_dir: str, time_dir: str, output_dir: str) -> None:
                     writer.writerows(array)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2], sys.argv[3])
+    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

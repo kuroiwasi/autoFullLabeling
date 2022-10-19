@@ -22,8 +22,8 @@ import librosa
 import soundfile as sf
 import num2index as n2i
 
-def main(input_dir: str) -> None:
-    for i in range(5000):
+def main(list_row, input_dir) -> None:
+    for i in range(int(list_row)):
         # 入出力ファイル名を指定
         index = n2i.num2index(i + 1)
         input_path = input_dir + 'BASIC5000_' + index + '.wav'
@@ -33,4 +33,4 @@ def main(input_dir: str) -> None:
         sf.write(output_path, y, sr, subtype='PCM_16')
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])

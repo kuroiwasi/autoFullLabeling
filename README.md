@@ -22,7 +22,7 @@ ex. 123 番の台本の場合: `BASIC5000_0123.wav`
 ### 実行
 #### Linux
 ```
-$ bash LABELING.bash
+$ bash scripts/LABELING.bash
 ```
 #### macOS
 ```bash

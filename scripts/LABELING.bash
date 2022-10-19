@@ -17,6 +17,13 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 LISENCE
 
+# variable
+list_row=5000
+jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
+wav_file='./wav/'
+log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
+'./output_files/log/04_segment.log')
+
 # reflesh of directory
 refresh_dir=('./output_files/labels/' './output_files/log/' './tools/segmentation-kit/wav/')  
 for index in ${refresh_dir[@]}; do
@@ -29,24 +36,18 @@ step_dir=('./output_files/labels/00' './output_files/labels/01_時間情報削�
 './output_files/labels/04_時間情報のみ/' './output_files/labels/05_時間情報付きフルコンテキストラベル/')
 for index in ${step_dir[@]}; do mkdir ${index}; done
 
-# other variable
-jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
-wav_file='./wav/'
-log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
-'./output_files/log/04_segment.log')
-
-# step 1: 台本からフルコンテキストラベルの取り出し
-echo 'step 1: 台本からフルコンテキストラベルの取り出し'
-python3 ./scripts/台本をフルコンテキストラベルに変換.py ${jsut_corpus} ${step_dir[1]}
+# step 1: 台本からフルコンテキストラベルに変換
+echo 'step 1: 台本をフルコンテキストラベルに変換'
+python3 ./scripts/src/台本をフルコンテキストラベルに変換.py ${list_row} ${jsut_corpus} ${step_dir[1]}
 
 # step 2: julius 用のローマ字台本ファイル作成
 echo 'step 2: julius 用のローマ字台本ファイル作成'
-python3 ./scripts/台本を漢字からローマ字に変換.py ${jsut_corpus} ${step_dir[2]}
+python3 ./scripts/src/台本を漢字からローマ字に変換.py ${list_row} ${jsut_corpus} ${step_dir[2]}
 
 # step 3: julius を利用した強制音素アライメント
 echo 'step 3: julius を利用した強制音素アライメント'
 cp ${step_dir[2]}/* ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
-python3 ./scripts/音声ファイルをレート調整してコピー.py ${wav_file}  # 音声ファイルをコピー
+python3 ./scripts/src/音声ファイルをレート調整してコピー.py ${list_row} ${wav_file}  # 音声ファイルをコピー
 # 強制音素アライメントの生成
 cd ./tools/segmentation-kit/
 perl ./segment_julius.pl >> ../../${log_file[2]} 2>&1
@@ -56,8 +57,8 @@ cp ./tools/segmentation-kit/wav/*.lab ${step_dir[3]}
 
 # step 4: 音素アライメントから時間情報の抽出
 echo 'step 4: 音素アライメントから時間情報の抽出'
-python3 ./scripts/モノフォンラベルから時間情報の削除.py ${step_dir[3]} ${step_dir[4]}
+python3 ./scripts/src/モノフォンラベルから時間情報の削除.py ${list_row} ${step_dir[3]} ${step_dir[4]}
 
 # step 5: 新時間情報つきフルコンテキストラベルの作成
 echo 'step 5: 新時間情報付きフルコンテキストラベルの作成'
-python3 ./scripts/ファイルの結合.py ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
+python3 ./scripts/src/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
