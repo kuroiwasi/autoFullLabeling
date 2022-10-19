@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 LISENCE
 
-# variable
-list_row=5000
+# コーパスのパス
 jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
+# コーパスの行数
+list_row=5000
+# 音声ファイルのパス
 wav_file='./wav/'
-log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
-'./output_files/log/04_segment.log')
 
 # reflesh of directory
 refresh_dir=('./output_files/labels/' './output_files/log/' './tools/segmentation-kit/wav/')  
@@ -35,6 +35,9 @@ step_dir=('./output_files/labels/00' './output_files/labels/01_時間情報削�
 './output_files/labels/02_ローマ字台本/' './output_files/labels/03_新時間情報モノフォンラベル/' \
 './output_files/labels/04_時間情報のみ/' './output_files/labels/05_時間情報付きフルコンテキストラベル/')
 for index in ${step_dir[@]}; do mkdir ${index}; done
+
+log_file=('./output_files/log/00_configure.log' './output_files/log/00_make.log' \
+'./output_files/log/04_segment.log')
 
 # step 1: 台本からフルコンテキストラベルに変換
 echo 'step 1: 台本をフルコンテキストラベルに変換'
