@@ -22,9 +22,8 @@ services:
       dockerfile: Dockerfile
     container_name: dockerenv
     volumes:
-      - ./LABELING.bash:/root/LABELING.bash:ro
       - ./corpus/:/root/corpus/:rw
-      - ./scripts/:/root/scripts/:ro
+      - ./scripts/:/root/scripts/:rw
       - ./tools/:/root/tools/:rw
       - ./wav/:/root/wav/:rw
       - ./output_files/:/root/output_files/:rw
