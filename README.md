@@ -1,18 +1,17 @@
 # DNNTTS-with-YourVoice ver. 0.1.0
 ダウンロードは [>> こちら <<](https://gitlab.com/f-matano44/dnntts-with-yourvoice/-/releases)
 ## これはなに
-これは [ttslearn](https://github.com/r9y9/ttslearn) を用いた DNNTTS 学習のために必要な時間情報付きフルコンテキストラベルを、便利ツール (Julius と pyopenjtalk) を使って、台本 (JSUT コーパス - BASIC5000) とその台本を読み上げた音声から生成するプログラムです。<br>
-動作確認は JSUT コーパス付属の音声を使って確かめたところ、ラベルの作成とそれを用いての合成音声生成までは確認しました。自分の声を用いての動作確認はまだしてないです、そのうちします。
+これは [ttslearn](https://github.com/r9y9/ttslearn) を用いた DNNTTS 学習のために必要な時間情報付きフルコンテキストラベルを、Julius と pyopenjtalk を使って、台本 (JSUT コーパス - BASIC5000) と音声から生成するプログラムです。<br>
 ## 作者の環境
 ### Linux
-Linux mint 20.3 edge
+* Linux mint 20.3 edge
 ### macOS
 * Docker Desktop version 20.10.17
 * Docker Compose version v2.10.2
 ## どうやって使うの
 ### 事前準備
 #### Python ライブラリ
-`requirements.txt` にまとめておいたので、そこからインストールしてください。
+`requirements.txt` にまとめておいたので、pip を使う場合はそこからインストールしてください。
 ```
 $ pip install -r ./requirements.txt
 ```
@@ -22,7 +21,7 @@ ex. 123 番の台本の場合: `BASIC5000_0123.wav`
 ### 実行
 #### Linux
 ```
-$ bash scripts/LABELING.bash
+bash scripts/LABELING.bash
 ```
 #### macOS
 ```bash
@@ -31,7 +30,7 @@ docker-compose up -d --build
 docker-compose exec dnntts bash
 
 # ラベリングの実行
-bash LABELING.bash
+bash scripts/LABELING.bash
 
 # コンテナの停止・削除
 exit # Docker 環境から退出
