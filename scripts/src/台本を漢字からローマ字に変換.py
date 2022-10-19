@@ -30,8 +30,7 @@ def main(list_row, input_path, output_dir) -> None:
             index = n2i.num2index(i + 1)
             output_path = output_dir + index + '.txt'
             # 台本をローマ字に変換
-            kanji = array[i][15:]
-            roma = poj.g2p(kanji, kana=False)
+            roma = poj.g2p(array[i], kana=False)
             # julius と pyopenjtalk とで動作が異なる記号の変換
             roma = roma.replace('pau', 'sp').replace('cl', 'q').replace('v', 'b')
             # ローマ字台本 (小文字) データの書き出し

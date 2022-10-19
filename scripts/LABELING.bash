@@ -18,9 +18,9 @@ If not, see <https://www.gnu.org/licenses/>.
 LISENCE
 
 # コーパスのパス
-jsut_corpus='./corpus/jsut_ver1.1/basic5000/transcript_utf8.txt'
+jsut_corpus='./corpus/BASIC5000.list'
 # コーパスの文章数
-list_row=1
+list_row=5000
 # 音声ファイルのパス
 wav_file='./wav/'
 

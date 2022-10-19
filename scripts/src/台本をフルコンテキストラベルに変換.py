@@ -27,8 +27,6 @@ def main(list_row, input_path, output_dir) -> None:
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
         
         for i in range(int(list_row)):
-            # 台本番号の削除
-            array[i] = array[i][15:]
             # 出力ファイルの設定
             index = n2i.num2index(i + 1)
             output_path = output_dir + index + '.lab'
