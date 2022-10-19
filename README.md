@@ -34,7 +34,7 @@ docker-compose exec dnntts bash
 bash LABELING.bash
 
 # コンテナの停止・削除
-exit
+exit # Docker 環境から退出
 docker-compose down
 ```
 
@@ -43,12 +43,4 @@ DNNTTS with YourVoice のルートディレクトリに移動して以上のコ�
 このプログラムは以下のプログラムを利用することで動作しています．<br>
 各製作者の方々，有難うございます．<br>
 * [Julius](https://julius.osdn.jp/index.php?q=newjulius.html): `/tools/segmentation-kit/bin/julius-4.6`
-  * BSD 3-Clause License: https://github.com/julius-speech/julius/blob/master/LICENSE
-  * Copyright (c) 1991-2020 Kawahara Lab., Kyoto University
-  * Copyright (c) 1997-2000 Information-technology Promotion Agency, Japan
-  * Copyright (c) 2000-2005 Shikano Lab., Nara Institute of Science and Technology
-  * Copyright (c) 2005-2020 Julius project team, Nagoya Institute of Technology
 * [音素セグメンテーションキット](https://julius.osdn.jp/index.php?q=ouyoukit.html): `/tools/segmentation-kit/`
-  * The MIT License (MIT): https://github.com/julius-speech/segmentation-kit/blob/master/License.md
-  * Copyright (c) 2005-2015 Julius project team, Lee Lab., Nagoya Institute of Technology
-  * Copyright (c) 2008 Ryuichi Nisimura 
