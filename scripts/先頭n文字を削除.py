@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# 使い方
+# python 先頭n文字を削除.py (削除文字数) (input_path) (output_path)
 
 """
 Copyright 2022 Fumiyoshi MATANO
