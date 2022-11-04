@@ -19,14 +19,12 @@ If not, see <https://www.gnu.org/licenses/>.
 
 import sys
 import csv
-import num2index as n2i
 
 def main(list_row, input_dir, output_dir) -> None:
-    for i in range(int(list_row)):
+    for i in range(1, int(list_row)+1):
         # 入出力ファイル名を設定
-        index = n2i.num2index(i + 1)
-        input_path = input_dir + index + '.lab'
-        output_path = output_dir + index + '.lab'
+        input_path  = f"{input_dir}{i:04}.lab"
+        output_path = f"{output_dir}{i:04}.lab"
 
         with open(input_path, 'rt') as input_file:
             # ラベルデータの読み込み

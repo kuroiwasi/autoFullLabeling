@@ -20,14 +20,13 @@ If not, see <https://www.gnu.org/licenses/>.
 import sys
 import librosa
 import soundfile as sf
-import num2index as n2i
 
 def main(list_row, input_dir) -> None:
-    for i in range(int(list_row)):
+    for i in range(1, int(list_row)+1):
         # 入出力ファイル名を指定
-        index = n2i.num2index(i + 1)
-        input_path = input_dir + 'BASIC5000_' + index + '.wav'
-        output_path = './tools/segmentation-kit/wav/' + index + '.wav'
+        input_path  = f"{input_dir}BASIC5000_{i:04}.wav'"
+        output_path = f"./tools/segmentation-kit/wav/{i:04}.wav"
+        
         # sr: 16kHz, rate: 16bit の PCM 形式に音声を変換して出力
         y, sr = librosa.core.load(input_path, sr=16000, mono=True)
         sf.write(output_path, y, sr, subtype='PCM_16')

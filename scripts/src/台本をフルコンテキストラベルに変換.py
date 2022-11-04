@@ -26,10 +26,9 @@ def main(list_row, input_path, output_dir) -> None:
         # 台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
         
-        for i in range(int(list_row)):
+        for i in range(1, int(list_row)+1):
             # 出力ファイルの設定
-            index = n2i.num2index(i + 1)
-            output_path = output_dir + index + '.lab'
+            output_path = f"{output_dir}{i:04}.lab"
             
             # フルコンテキストラベルの生成
             full_labels = poj.extract_fullcontext(array[i])

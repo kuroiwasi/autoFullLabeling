@@ -20,15 +20,13 @@ If not, see <https://www.gnu.org/licenses/>.
 import csv
 import sys
 import numpy as np
-import num2index as n2i
 
 def main(list_row, label_dir, time_dir, output_dir) -> None:
-    for i in range(int(list_row)):
+    for i in range(1, int(list_row)+1):
         # 入出力ファイル名を設定
-        index = n2i.num2index(i + 1)
-        label_path = label_dir + index + '.lab'
-        time_path = time_dir + index + '.lab'
-        output_path = output_dir + 'BASIC5000_' + index + '.lab'
+        label_path  = f"{label_dir}{i:04}.lab"
+        time_path   = f"{time_dir}{i:04}.lab"
+        output_path = f"{output_dir}BASIC5000_{i:04}.lab"
 
         with open(label_path, 'rt') as label_file:
             with open(time_path, 'rt') as time_file:
