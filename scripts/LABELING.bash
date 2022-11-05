@@ -18,7 +18,7 @@ If not, see <https://www.gnu.org/licenses/>.
 LISENCE
 
 # コーパスのパス
-jsut_corpus='./corpus/BASIC5000.list'
+jsut_corpus='./corpus/BASIC5000.txt'
 # コーパスの文章数
 list_row=5000
 # 音声ファイルのパス
