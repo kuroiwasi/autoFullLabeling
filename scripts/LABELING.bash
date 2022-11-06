@@ -43,18 +43,20 @@ for index in ${step_dir[@]}; do mkdir ${index}; done
 log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.log" \
 "${root_of_logfiles}/04_segment.log")
 
+dir_of_scripts="./scripts/src" # スクリプトの保存場所
+
 # step 1: 台本からフルコンテキストラベルに変換
 echo "step 1: 台本をフルコンテキストラベルに変換"
-python3 ./scripts/src/台本をフルコンテキストラベルに変換.py ${list_row} ${jsut_corpus} ${step_dir[1]}
+python3 ${dir_of_scripts}/台本をフルコンテキストラベルに変換.py ${list_row} ${jsut_corpus} ${step_dir[1]}
 
 # step 2: julius 用のローマ字台本ファイル作成
 echo "step 2: julius 用のローマ字台本ファイル作成"
-python3 ./scripts/src/台本を漢字からローマ字に変換.py ${list_row} ${jsut_corpus} ${step_dir[2]}
+python3 ${dir_of_scripts}/台本を漢字からローマ字に変換.py ${list_row} ${jsut_corpus} ${step_dir[2]}
 
 # step 3: julius を利用した強制音素アライメント
 echo "step 3: julius を利用した強制音素アライメント"
 cp ${step_dir[2]}/* ./tools/segmentation-kit/wav/ # ローマ字台本をコピー
-python3 ./scripts/src/音声ファイルをレート調整してコピー.py ${list_row} ${wav_file}  # 音声ファイルをコピー
+python3 ${dir_of_scripts}/音声ファイルをレート調整してコピー.py ${list_row} ${wav_file}  # 音声ファイルをコピー
 # 強制音素アライメントの生成
 cd ./tools/segmentation-kit/
 perl ./segment_julius.pl >> ../../${log_file[2]} 2>&1
@@ -64,8 +66,8 @@ cp ./tools/segmentation-kit/wav/*.lab ${step_dir[3]}
 
 # step 4: 音素アライメントから時間情報の抽出
 echo "step 4: 音素アライメントから時間情報の抽出"
-python3 ./scripts/src/モノフォンラベルから時間情報の削除.py ${list_row} ${step_dir[3]} ${step_dir[4]}
+python3 ${dir_of_scripts}/モノフォンラベルから時間情報の削除.py ${list_row} ${step_dir[3]} ${step_dir[4]}
 
 # step 5: 新時間情報つきフルコンテキストラベルの作成
 echo "step 5: 新時間情報付きフルコンテキストラベルの作成"
-python3 ./scripts/src/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
+python3 ${dir_of_scripts}/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
