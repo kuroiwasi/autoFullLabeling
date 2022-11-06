@@ -22,7 +22,8 @@ docker-compose up --build
 
 これにより `output_files/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。
 # 謝辞
-このプログラムは以下のプログラムを利用することで動作しています．<br>
+このプログラムは以下のプログラム等を利用することで動作しています．<br>
 各製作者の方々，有難うございます．<br>
 * [Julius](https://julius.osdn.jp/index.php?q=newjulius.html): `tools/segmentation-kit/bin/julius/julius-4.6`
 * [音素セグメンテーションキット](https://julius.osdn.jp/index.php?q=ouyoukit.html): `tools/segmentation-kit/`
+* [JSUT コーパス](https://sites.google.com/site/shinnosuketakamichi/publication/jsut): `corpus/BASIC5000.txt`
