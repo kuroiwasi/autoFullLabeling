@@ -26,22 +26,22 @@ list_row=1
 # 音声ファイルのパス
 wav_file="./wav/"
 
-# reflesh of directory
+# ディレクトリをリフレッシュ
 root_of_labels="./output_files/labels"
 root_of_logfiles="./output_files/log"
-refresh_dir=("./output_files/labels/" "./output_files/log/" "./tools/segmentation-kit/wav/")  
+refresh_dir=("${root_of_labels}/" "${root_of_logfiles}/" "./tools/segmentation-kit/wav/")  
 for index in ${refresh_dir[@]}; do
     if [ -d ${index} ]; then rm -rf ${index}; fi
     mkdir ${index}
 done
-## create directory of outputs for each step
-step_dir=("./output_files/labels/00" "./output_files/labels/01_時間情報削除済みラベル/" \
-"./output_files/labels/02_ローマ字台本/" "./output_files/labels/03_新時間情報モノフォンラベル/" \
-"./output_files/labels/04_時間情報のみ/" "./output_files/labels/05_時間情報付きフルコンテキストラベル/")
+## ラベル用ディレクトリを作成
+step_dir=("${root_of_labels}/00" "${root_of_labels}/01_時間情報削除済みラベル/" \
+"${root_of_labels}/02_ローマ字台本/" "${root_of_labels}/03_新時間情報モノフォンラベル/" \
+"${root_of_labels}/04_時間情報のみ/" "${root_of_labels}/05_時間情報付きフルコンテキストラベル/")
 for index in ${step_dir[@]}; do mkdir ${index}; done
-## create directory of logfiles
-log_file=("./output_files/log/00_configure.log" "./output_files/log/00_make.log" \
-"./output_files/log/04_segment.log")
+## rログ用ディレクトリを作成
+log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.log" \
+"${root_of_logfiles}/04_segment.log")
 
 # step 1: 台本からフルコンテキストラベルに変換
 echo "step 1: 台本をフルコンテキストラベルに変換"
