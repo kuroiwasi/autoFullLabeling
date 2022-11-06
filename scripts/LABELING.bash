@@ -69,5 +69,3 @@ python3 ./scripts/src/モノフォンラベルから時間情報の削除.py ${l
 # step 5: 新時間情報つきフルコンテキストラベルの作成
 echo "step 5: 新時間情報付きフルコンテキストラベルの作成"
 python3 ./scripts/src/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
-
-exit
