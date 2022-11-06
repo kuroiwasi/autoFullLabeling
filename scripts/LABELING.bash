@@ -17,10 +17,12 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 LISENCE
 
+set -e # エラー時に停止
+
 # コーパスのパス
 jsut_corpus='./corpus/BASIC5000.txt'
 # コーパスの文章数
-list_row=5000
+list_row=1
 # 音声ファイルのパス
 wav_file='./wav/'
 
@@ -65,3 +67,5 @@ python3 ./scripts/src/モノフォンラベルから時間情報の削除.py ${l
 # step 5: 新時間情報つきフルコンテキストラベルの作成
 echo 'step 5: 新時間情報付きフルコンテキストラベルの作成'
 python3 ./scripts/src/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
+
+exit

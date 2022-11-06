@@ -18,14 +18,12 @@ version: '3'
 services:
   dockerenv:
     build:
-      context: ./src/
+      context: ./
       dockerfile: Dockerfile
     container_name: dockerenv
+    # command: bash -c "cd /root/ && bash scripts/LABELING.bash"
     volumes:
-      - ./corpus/:/root/corpus/:rw
-      - ./scripts/:/root/scripts/:rw
       - ./tools/:/root/tools/:rw
       - ./wav/:/root/wav/:rw
       - ./output_files/:/root/output_files/:rw
     tty: true
-    working_dir: /root/

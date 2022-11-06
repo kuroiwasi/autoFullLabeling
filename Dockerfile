@@ -22,8 +22,13 @@ ENV TERM=xterm
 
 # Install library from pip
 RUN apt-get install -y cmake
-COPY requirements.txt /root/requirements.txt
+COPY src/requirements.txt /root/requirements.txt
 RUN pip install -r /root/requirements.txt
 
 # Install software from apt-get
 RUN apt-get install -y libsndfile1 libpulse0 libasound2
+
+# Copy nesessary files
+WORKDIR /root/
+COPY corpus/ corpus/
+COPY scripts/ scripts/
