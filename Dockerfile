@@ -28,7 +28,9 @@ RUN pip install -r /root/requirements.txt
 # Install software from apt-get
 RUN apt-get install -y libsndfile1 libpulse0 libasound2
 
-# Copy nesessary files
 WORKDIR /root/
+# Copy nesessary files original/dir -> copied/dir
 COPY corpus/ corpus/
 COPY scripts/ scripts/
+COPY wav/ wav/
+COPY tools/ tools/
