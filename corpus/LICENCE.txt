@@ -1,4 +1,4 @@
-BASIC5000.list は JSUT コーパス - BASIC5000 から文番号を削除したものです．
+BASIC5000.txt は JSUT コーパス - BASIC5000 から文番号を削除したものです．
 したがって，ライセンスは JSUT コーパスから継承されます．
 https://sites.google.com/site/shinnosuketakamichi/publication/jsut
 
