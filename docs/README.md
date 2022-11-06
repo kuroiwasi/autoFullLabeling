@@ -8,27 +8,19 @@
 * Docker Desktop version 20.10.17
 * Docker Compose version v2.10.2
 ## どうやって使うの
-### 事前準備
-#### Python ライブラリ
-`requirements.txt` にまとめておいたので、pip を使う場合はそこからインストールしてください。
-```
-$ pip install -r ./requirements.txt
-```
-#### 録音データの配置
-`/wav/` に `BASIC5000_xxxx.wav` の形式で配置してください。 xxxx には対応する台本の番号が入ります。<br>
+`/wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，DNNTTS with YourVoice のディレクトリに移動して OS に対応する以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
 ex. 123 番の台本の場合: `BASIC5000_0123.wav`
-### 実行
-#### Linux
+### Linux
 ```
+pip install -r ./requirements.txt
 bash scripts/LABELING.bash
 ```
-#### macOS
+### macOS
 ```bash
-# コンテナのビルド・起動
 docker-compose up --build
 ```
 
-DNNTTS with YourVoice のディレクトリに移動して以上のコマンドを実行してください。これにより `/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。<br>
+これにより `output_files/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。
 # 謝辞
 このプログラムは以下のプログラムを利用することで動作しています．<br>
 各製作者の方々，有難うございます．<br>
