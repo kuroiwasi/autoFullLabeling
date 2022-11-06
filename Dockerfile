@@ -33,4 +33,3 @@ WORKDIR /root/
 COPY corpus/ corpus/
 COPY scripts/ scripts/
 COPY wav/ wav/
-COPY tools/ tools/

@@ -24,3 +24,4 @@ services:
     command: bash scripts/LABELING.bash
     volumes:
       - ./output_files/:/root/output_files/:rw
+      - ./tools/:/root/tools/:rw
