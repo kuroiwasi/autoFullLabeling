@@ -1,12 +1,11 @@
 ## これはなに
 これは [ttslearn](https://github.com/r9y9/ttslearn) を用いた DNNTTS 学習のために必要な時間情報付きフルコンテキストラベルを、Julius と pyopenjtalk を使って、台本 (JSUT コーパス - BASIC5000) と音声から生成するプログラムです。
 ## 動作確認環境
-### Linux
+
 * Linux mint 20.3 edge
-### macOS
 * macOS 12.6.1
-* Docker Desktop version 20.10.17
-* Docker Compose version v2.10.2
+  * Docker version 20.10.20
+  * Docker Compose version 2.12.2
 ## どうやって使うの
 `/wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，DNNTTS with YourVoice のディレクトリに移動して OS に対応する以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
 ex. 123 番の台本の場合: `BASIC5000_0123.wav`
