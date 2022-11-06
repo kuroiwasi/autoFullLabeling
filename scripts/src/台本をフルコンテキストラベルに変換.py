@@ -18,7 +18,6 @@ If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
-import num2index as n2i
 import pyopenjtalk as poj
 
 def main(list_row, input_path, output_dir) -> None:
