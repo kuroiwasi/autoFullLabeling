@@ -27,7 +27,7 @@ def main(list_row, input_path, output_dir) -> None:
 
         for i in range(1, int(list_row)+1):
             # 出力ファイル名を設定
-            output_path = f"{output_dir}{i:04}.txt"
+            output_path = f"{output_dir}/{i:04}.txt"
 
             # 台本をローマ字に変換
             roma = poj.g2p(array[i], kana=False)

@@ -24,9 +24,9 @@ import numpy as np
 def main(list_row, label_dir, time_dir, output_dir) -> None:
     for i in range(1, int(list_row)+1):
         # 入出力ファイル名を設定
-        label_path  = f"{label_dir}{i:04}.lab"
-        time_path   = f"{time_dir}{i:04}.lab"
-        output_path = f"{output_dir}BASIC5000_{i:04}.lab"
+        label_path  = f"{label_dir}/{i:04}.lab"
+        time_path   = f"{time_dir}/{i:04}.lab"
+        output_path = f"{output_dir}/BASIC5000_{i:04}.lab"
 
         with open(label_path, 'rt') as label_file:
             with open(time_path, 'rt') as time_file:
