@@ -16,7 +16,7 @@ bash bin/LABELING.bash
 ```
 ## macOS
 ```bash
-docker-compose build # docker のビルド
+docker-compose build # docker のビルド (初回起動のみ)
 docker-compose up # 実行
 ```
 
