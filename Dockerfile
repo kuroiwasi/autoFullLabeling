@@ -31,5 +31,5 @@ RUN apt-get install -y libsndfile1 libpulse0 libasound2
 WORKDIR /root/
 # Copy nesessary files original/dir -> copied/dir
 COPY corpus/ corpus/
-COPY scripts/ scripts/
+COPY bin/ bin/
 COPY wav/ wav/
