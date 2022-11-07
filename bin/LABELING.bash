@@ -29,23 +29,28 @@ list_row=1
 ### ここから下は触ると大変なことになるかもだから触るなら心して触れ ###
 #######################################################
 
-wav_file="./wav"                       # 音声ファイルのパス
+wav_file="./wav"                        # 音声ファイルのパス
 root_of_labels="./temp/labels"          # ラベルフォルダのルート
 root_of_logfiles="./temp/log"           # ログフォルダのルート
 segment_kit="./tools/segmentation-kit"  # 音素セグメンテーションキット
 dir_of_scripts="./bin/src"              # スクリプトの保存フォルダ
+output_dir="./output"                   # 最終結果の保存場所
+
 # ディレクトリをリフレッシュ
-refresh_dir=("${root_of_labels}" "${root_of_logfiles}" "${segment_kit}/wav")  
+refresh_dir=("${root_of_labels}" "${root_of_logfiles}" "${segment_kit}/wav" \
+"${output_dir}/wav ${output_dir}/lab")  
 for index in ${refresh_dir[@]}; do
     if [ -d ${index} ]; then rm -rf ${index}; fi
     mkdir ${index}
 done
-## ラベル用ディレクトリを作成
+
+# ラベル用ディレクトリを作成
 step_dir=("${root_of_labels}/00" "${root_of_labels}/01_時間情報削除済みラベル" \
 "${root_of_labels}/02_ローマ字台本" "${root_of_labels}/03_新時間情報モノフォンラベル" \
 "${root_of_labels}/04_時間情報のみ" "${root_of_labels}/05_時間情報付きフルコンテキストラベル")
 for index in ${step_dir[@]}; do mkdir ${index}; done
-## ログの保存先パスを設定
+
+# ログの保存先パスを設定
 log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.log" \
 "${root_of_logfiles}/04_segment.log")
 
@@ -76,5 +81,5 @@ echo "step 5: 時間情報ありフルコンテキストラベルの作成"
 python3 ${dir_of_scripts}/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
 
 # output にファイルを出力
-cp -R ${step_dir[5]} ./output/lab
-cp -R ${wav_file} ./output/wav
+cp -RT ${step_dir[5]} ${output_dir}/lab
+cp -RT ${wav_file} ${output_dir}/wav
