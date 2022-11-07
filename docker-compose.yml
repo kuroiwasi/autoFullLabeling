@@ -23,6 +23,7 @@ services:
     container_name: dockerenv
     command: bash bin/LABELING.bash
     volumes:
-      - ./output_files/:/root/output_files/
+      - ./output/:/root/output/
       - ./tools/:/root/tools/
       - ./wav/:/root/wav/
+      - ./temp/:/root/temp/
