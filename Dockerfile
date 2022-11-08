@@ -14,18 +14,32 @@
 ## If not, see <https://www.gnu.org/licenses/>. 
 
 FROM python:3.9-slim-bullseye
+
 USER root
-WORKDIR /root/
-RUN apt-get update
+# apt-get から追加ソフトウェアをインストール
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libasound2 \
+    libpulse0 \
+    libsndfile1 
 
-# Install library from pip
-RUN apt-get install -y build-essential cmake
-COPY src/requirements.txt /root/requirements.txt
-RUN pip install -r /root/requirements.txt
+# アクセス権周りの問題解消のために新規ユーザーを作成
+ARG UID
+ENV UID=${UID}
+ARG GID
+ENV GID=${GID}
+RUN groupadd -g "${GID}" "user"
+RUN useradd -u "${UID}" -g "${GID}" -m "user"
+RUN chown -R user:user /home/user
 
-# Install software from apt-get
-RUN apt-get install -y libsndfile1 libpulse0 libasound2
+USER user
+WORKDIR /home/user
+# pip から Python ライブラリをインストール
+COPY src/requirements.txt ./requirements.txt
+RUN pip install -r ./requirements.txt
 
-# Copy nesessary files original/dir -> copied/dir
-COPY bin/ bin/
-COPY corpus/ corpus/
+# 必要なディレクトリをコピー original/dir -> copied/dir
+COPY bin bin
+COPY corpus corpus
+COPY wav wav

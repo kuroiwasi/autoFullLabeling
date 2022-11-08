@@ -20,10 +20,14 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+      args:
+        - "UID=${HOSTUID}"
+        - "GID=${HOSTGID}"
     container_name: dockerenv
     command: bash bin/LABELING.bash
+    user: "${HOSTUID}:${HOSTGID}"
     volumes:
-      - ./output/:/root/output/
-      - ./tools/:/root/tools/
-      - ./wav/:/root/wav/
-      - ./temp/:/root/temp/
+      - ./output/:/home/user/output/
+      - ./tools/:/home/user/tools/
+      - ./temp/:/home/user/temp/
+    working_dir: /home/user
