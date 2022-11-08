@@ -18,14 +18,16 @@ version: '3'
 services:
   dockerenv:
     build:
-      context: ./src/
+      context: ./
       dockerfile: Dockerfile
+      args:
+        - "UID=${HOSTUID}"
     container_name: dockerenv
+    command: bash src/bin/LABELING.bash
+    user: "${HOSTUID}"
     volumes:
-      - ./corpus/:/root/corpus/:rw
-      - ./scripts/:/root/scripts/:rw
-      - ./tools/:/root/tools/:rw
-      - ./wav/:/root/wav/:rw
-      - ./output_files/:/root/output_files/:rw
-    tty: true
-    working_dir: /root/
+      - ./output/:/home/user/output/
+      - ./src/:/home/user/src/
+      - ./temp/:/home/user/temp/
+      - ./wav/:/home/user/wav/
+    working_dir: /home/user

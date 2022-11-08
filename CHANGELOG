@@ -1,3 +1,9 @@
+version 1.0.0
+起動方法を mac と linux で統一
+Docker コマンドの簡略化
+ディレクトリ構造の大幅更新
+その他軽微な修正
+
 version 0.1.0
 外部ソフトウェア, JSUT コーパス - BASIC5000 を同梱
 
@@ -7,7 +13,7 @@ Dockerfile, docker-compose.yml の追加
 version 0.0.3
 typo の修正
 requirements.txt の追加
-リファクタリング
+その他軽微な修正
 
 version 0.0.2
 標準設定だと動作しない重大なバグの修正

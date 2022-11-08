@@ -13,17 +13,26 @@
 ## You should have received a copy of the GNU General Public License along with DNNTTS-With-YourVoice.
 ## If not, see <https://www.gnu.org/licenses/>. 
 
-FROM python:3.9-bullseye
+FROM python:3.9-slim-bullseye
+
 USER root
-RUN apt-get update
+# apt-get から追加ソフトウェアをインストール
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libasound2 \
+    libpulse0 \
+    libsndfile1 
 
-# Set environment variable
-ENV TERM=xterm
+# アクセス権周りの問題解消のために新規ユーザーを作成
+ARG UID
+ENV UID=${UID}
+RUN useradd -u "${UID}" -m "user"
+RUN chown -R user /home/user
 
-# Install library from pip
-RUN apt-get install -y cmake
-COPY requirements.txt /root/requirements.txt
-RUN pip install -r /root/requirements.txt
-
-# Install software from apt-get
-RUN apt-get install -y libsndfile1 libpulse0 libasound2
+USER user
+WORKDIR /home/user
+ARG HOME="/home/user"
+# pip から Python ライブラリをインストール
+COPY ./requirements.txt ${HOME}/requirements.txt
+RUN pip install -r ${HOME}/requirements.txt
