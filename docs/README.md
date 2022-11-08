@@ -13,7 +13,7 @@
 ex. 123 番の台本の場合: `BASIC5000_0123.wav`
 ## 実行
 ```bash
-HOSTUID=$(id -u) HOSTGID=$(id -g) docker compose up --build
+HOSTUID=$(id -u) HOSTGID=$(id -g) docker-compose up --build
 ```
 
 これにより `output/` に音素境界付きフルコンテキストラベルと音声が出力されます。
