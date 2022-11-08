@@ -10,10 +10,11 @@
   * Docker Compose version 2.12.2
 # どうやって使うの
 `wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，DNNTTS with YourVoice のディレクトリに移動して OS に対応する以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
-ex. 123 番の台本の場合: `BASIC5000_0123.wav`
+ex. 台本 123 番の音声の場合: `BASIC5000_0123.wav`
 ## 実行
 ```bash
-HOSTUID=$(id -u) docker compose up --build
+HOSTUID=$(id -u) docker compose build # Docker イメージの作成 (初回のみ)
+HOSTUID=$(id -u) docker compose up # 起動
 ```
 
 これにより `output/` に音素境界付きフルコンテキストラベルと音声が出力されます。
