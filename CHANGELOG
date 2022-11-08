@@ -1,5 +1,6 @@
-version 0.1.1
-Docker コマンドの一部簡略化
+version 1.0.0
+Docker コマンドの簡略化
+ディレクトリ構造の大幅更新
 その他軽微な修正
 
 version 0.1.0
