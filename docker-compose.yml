@@ -22,10 +22,9 @@ services:
       dockerfile: Dockerfile
       args:
         - "UID=${HOSTUID}"
-        - "GID=${HOSTGID}"
     container_name: dockerenv
     command: bash src/bin/LABELING.bash
-    user: "${HOSTUID}:${HOSTGID}"
+    user: "${HOSTUID}"
     volumes:
       - ./output/:/home/user/output/
       - ./src/:/home/user/src/

@@ -27,11 +27,8 @@ RUN apt-get update && apt-get install -y \
 # アクセス権周りの問題解消のために新規ユーザーを作成
 ARG UID
 ENV UID=${UID}
-ARG GID
-ENV GID=${GID}
-RUN groupadd -g "${GID}" "user"
-RUN useradd -u "${UID}" -g "${GID}" -m "user"
-RUN chown -R user:user /home/user
+RUN useradd -u "${UID}" -m "user"
+RUN chown -R user /home/user
 
 USER user
 WORKDIR /home/user
