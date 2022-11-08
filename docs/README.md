@@ -9,7 +9,7 @@
   * Docker version 20.10.20
   * Docker Compose version 2.12.2
 # どうやって使うの
-`wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，DNNTTS with YourVoice のディレクトリに移動して OS に対応する以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
+`wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
 ex. 台本 123 番の音声の場合: `BASIC5000_0123.wav`
 ## 実行
 ```bash
