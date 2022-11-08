@@ -20,8 +20,8 @@ LISENCE
 
 ### ここは実行前に設定する変数 ###
 
-# コーパスのパス
-corpath="./corpus/BASIC5000.txt"
+# コーパスファイル名
+corpus="BASIC5000.txt"
 # コーパスの文章数
 list_row=1
 
@@ -29,19 +29,22 @@ list_row=1
 ### ここから下は触ると大変なことになるかもだから触るなら心して触れ ###
 #######################################################
 
-wav_file="./wav"                        # 音声ファイルのパス
-root_of_labels="./temp/labels"          # ラベルフォルダのルート
-root_of_logfiles="./temp/log"           # ログフォルダのルート
-segment_kit="./tools/segmentation-kit"  # 音素セグメンテーションキット
-dir_of_scripts="./bin/src"              # スクリプトの保存フォルダ
-output_dir="./output"                   # 最終結果の保存場所
+HOME=/home/user
+corpath="${HOME}/src/corpus/${corpus}"
+wav_file="${HOME}/wav"                              # 音声ファイルのパス
+root_of_labels="${HOME}/temp/labels"                # ラベルフォルダのルート
+root_of_logfiles="${HOME}/temp/log"                 # ログフォルダのルート
+modded_wav="${HOME}/src/tools/segmentation-kit/wav" # レート調整された音声ファイル
+segment_kit="${HOME}/src/tools/segmentation-kit"    # 音素セグメンテーションキット
+dir_of_scripts="${HOME}/src/bin/src"                # スクリプトの保存フォルダ
+output_dir="${HOME}/output"                         # 最終結果の保存場所
 
 # ディレクトリをリフレッシュ
 refresh_dir=("${root_of_labels}" "${root_of_logfiles}" "${segment_kit}/wav" \
-"${output_dir}/wav ${output_dir}/lab")  
+"${output_dir}/wav ${output_dir}/lab" "${modded_wav}")  
 for index in ${refresh_dir[@]}; do
     if [ -d ${index} ]; then rm -rf ${index}; fi
-    mkdir ${index}
+    mkdir -p ${index}
 done
 
 # ラベル用ディレクトリを作成
@@ -66,9 +69,9 @@ python3 ${dir_of_scripts}/台本を漢字からローマ字に変換.py ${list_r
 echo "step 3: julius を利用した強制音素アライメント"
 ## データのコピー
 cp ${step_dir[2]}/* ${segment_kit}/wav # ローマ字台本をコピー
-python3 ${dir_of_scripts}/音声ファイルをレート調整してコピー.py ${list_row} ${wav_file}  # 音声ファイルをコピー
+python3 ${dir_of_scripts}/音声ファイルをレート調整してコピー.py ${list_row} ${wav_file} ${modded_wav} # 音声ファイルをコピー
 ## 強制音素アライメントの生成
-pushd ${segment_kit}; perl ./segment_julius.pl >> ../../${log_file[2]} 2>&1; popd
+pushd ${segment_kit}; perl segment_julius.pl >> ${log_file[2]} 2>&1; popd
 ## 生成されたデータをコピー
 cp ${segment_kit}/wav/*.lab ${step_dir[3]}
 

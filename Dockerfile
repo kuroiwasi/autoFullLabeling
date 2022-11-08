@@ -35,11 +35,7 @@ RUN chown -R user:user /home/user
 
 USER user
 WORKDIR /home/user
+ARG HOME="/home/user"
 # pip から Python ライブラリをインストール
-COPY src/requirements.txt ./requirements.txt
-RUN pip install -r ./requirements.txt
-
-# 必要なディレクトリをコピー original/dir -> copied/dir
-COPY bin bin
-COPY corpus corpus
-COPY wav wav
+COPY ./requirements.txt ${HOME}/requirements.txt
+RUN pip install -r ${HOME}/requirements.txt

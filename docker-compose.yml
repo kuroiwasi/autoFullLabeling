@@ -24,10 +24,11 @@ services:
         - "UID=${HOSTUID}"
         - "GID=${HOSTGID}"
     container_name: dockerenv
-    command: bash bin/LABELING.bash
+    command: bash src/bin/LABELING.bash
     user: "${HOSTUID}:${HOSTGID}"
     volumes:
       - ./output/:/home/user/output/
-      - ./tools/:/home/user/tools/
+      - ./src/:/home/user/src/
       - ./temp/:/home/user/temp/
+      - ./wav/:/home/user/wav/
     working_dir: /home/user

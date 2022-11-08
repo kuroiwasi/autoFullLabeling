@@ -9,14 +9,14 @@
   * Docker version 20.10.20
   * Docker Compose version 2.12.2
 # どうやって使うの
-`/wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，DNNTTS with YourVoice のディレクトリに移動して OS に対応する以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
+`wav/` に `BASIC5000_xxxx.wav` の形式で wav ファイルを配置してから，DNNTTS with YourVoice のディレクトリに移動して OS に対応する以下のコマンドを実行してください。 xxxx には対応する台本の番号が入ります。<br>
 ex. 123 番の台本の場合: `BASIC5000_0123.wav`
 ## 実行
 ```bash
-HOSTUID=$(id -u) HOSTGID=$(id -g) docker compose up --build # 実行
+HOSTUID=$(id -u) HOSTGID=$(id -g) docker compose up --build
 ```
 
-これにより `output_files/labels/05_時間情報付きフルコンテキストラベル` に音素境界付きフルコンテキストラベルが出力されます。
+これにより `output/` に音素境界付きフルコンテキストラベルと音声が出力されます。
 # 謝辞
 このプログラムは以下のプログラム等を利用することで動作しています．<br>
 各製作者の方々，有難うございます．<br>
