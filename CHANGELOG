@@ -1,3 +1,6 @@
+version 1.0.1
+一部開発中の設定だったため修正
+
 version 1.0.0
 起動方法を mac と linux で統一
 Docker コマンドの簡略化
