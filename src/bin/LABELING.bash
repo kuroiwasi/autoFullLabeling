@@ -59,17 +59,17 @@ log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.lo
 
 # コーパス -> 時間情報なしフルコンテキストラベル
 echo "step 1: 台本をフルコンテキストラベルに変換"
-python3 ${dir_of_scripts}/台本をフルコンテキストラベルに変換.py ${list_row} ${corpath} ${step_dir[1]}
+python3 ${dir_of_scripts}/Kanji2Full.py ${list_row} ${corpath} ${step_dir[1]}
 
 # コーパス -> ローマ字ファイル
 echo "step 2: julius 用のローマ字台本ファイル作成"
-python3 ${dir_of_scripts}/台本を漢字からローマ字に変換.py ${list_row} ${corpath} ${step_dir[2]}
+python3 ${dir_of_scripts}/Kanji2Roma.py ${list_row} ${corpath} ${step_dir[2]}
 
 # 録音音声 & ローマ字ファイル -> 時間情報ありモノフォンラベル
 echo "step 3: julius を利用した強制音素アライメント"
 ## データのコピー
 cp ${step_dir[2]}/* ${segment_kit}/wav # ローマ字台本をコピー
-python3 ${dir_of_scripts}/音声ファイルをレート調整してコピー.py ${list_row} ${wav_file} ${modded_wav} # 音声ファイルをコピー
+python3 ${dir_of_scripts}/ChangeRate.py ${list_row} ${wav_file} ${modded_wav} # 音声ファイルをコピー
 ## 強制音素アライメントの生成
 pushd ${segment_kit}; perl segment_julius.pl >> ${log_file[2]} 2>&1; popd
 ## 生成されたデータをコピー
@@ -77,11 +77,11 @@ cp ${segment_kit}/wav/*.lab ${step_dir[3]}
 
 # 時間情報ありモノフォンラベル -> 時間情報のみ
 echo "step 4: 音素アライメントから時間情報の抽出"
-python3 ${dir_of_scripts}/モノフォンラベルから時間情報の削除.py ${list_row} ${step_dir[3]} ${step_dir[4]}
+python3 ${dir_of_scripts}/RemoveTime.py ${list_row} ${step_dir[3]} ${step_dir[4]}
 
 # 時間情報のみ & 時間情報なしフルコンテキストラベル -> 時間情報ありフルコンテキストラベル
 echo "step 5: 時間情報ありフルコンテキストラベルの作成"
-python3 ${dir_of_scripts}/ファイルの結合.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
+python3 ${dir_of_scripts}/ConnectFiles.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
 
 # output にファイルを出力
 cp -RT ${step_dir[5]} ${output_dir}/lab
