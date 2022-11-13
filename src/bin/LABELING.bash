@@ -71,7 +71,9 @@ echo "step 3: julius を利用した強制音素アライメント"
 cp ${step_dir[2]}/* ${segment_kit}/wav # ローマ字台本をコピー
 python3 ${dir_of_scripts}/ChangeRate.py ${list_row} ${wav_file} ${modded_wav} # 音声ファイルをコピー
 ## 強制音素アライメントの生成
-pushd ${segment_kit}; perl segment_julius.pl >> ${log_file[2]} 2>&1; popd
+pushd ${segment_kit} > /dev/null
+perl segment_julius.pl >> ${log_file[2]} 2>&1
+popd > /dev/null
 ## 生成されたデータをコピー
 cp ${segment_kit}/wav/*.lab ${step_dir[3]}
 
