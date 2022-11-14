@@ -29,15 +29,14 @@ list_row=1
 ### ここから下は触ると大変なことになるかもだから触るなら心して触れ ###
 ############################################################
 
-HOME=/home/user
-corpath="${HOME}/src/corpus/${corpus}"
-wav_file="${HOME}/wav"                              # 音声ファイルのパス
-root_of_labels="${HOME}/temp/labels"                # ラベルフォルダのルート
-root_of_logfiles="${HOME}/temp/log"                 # ログフォルダのルート
-modded_wav="${HOME}/src/tools/segmentation-kit/wav" # レート調整された音声ファイル
-segment_kit="${HOME}/src/tools/segmentation-kit"    # 音素セグメンテーションキット
-dir_of_scripts="${HOME}/src/bin/src"                # スクリプトの保存フォルダ
-output_dir="${HOME}/output"                         # 最終結果の保存場所
+corpath="./src/corpus/${corpus}"
+wav_file="./wav"                              # 音声ファイルのパス
+root_of_labels="./temp/labels"                # ラベルフォルダのルート
+root_of_logfiles="./temp/log"                 # ログフォルダのルート
+modded_wav="./src/tools/segmentation-kit/wav" # レート調整された音声ファイル
+segment_kit="./src/tools/segmentation-kit"    # 音素セグメンテーションキット
+dir_of_scripts="./src/bin/src"                # スクリプトの保存フォルダ
+output_dir="./output"                         # 最終結果の保存場所
 
 # ディレクトリをリフレッシュ
 refresh_dir=("${root_of_labels}" "${root_of_logfiles}" "${segment_kit}/wav" \
@@ -71,7 +70,7 @@ echo "step 3: julius を利用した強制音素アライメント"
 cp ${step_dir[2]}/* ${segment_kit}/wav # ローマ字台本をコピー
 python3 ${dir_of_scripts}/Change_Rate.py ${list_row} ${wav_file} ${modded_wav} # 音声ファイルをコピー
 ## 強制音素アライメントの生成をサブシェルで実行
-(cd ${segment_kit}; perl segment_julius.pl >> ${log_file[2]} 2>&1)
+(cd ${segment_kit}; perl segment_julius.pl) >> ${log_file[2]} 2>&1
 ## 生成されたデータをコピー
 cp ${segment_kit}/wav/*.lab ${step_dir[3]}
 
