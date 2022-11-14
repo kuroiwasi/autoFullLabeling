@@ -18,24 +18,22 @@ If not, see <https://www.gnu.org/licenses/>.
 """
 
 import sys
-import pyopenjtalk as poj
+import csv
 
-list_row    = sys.argv[1]
-input_path  = sys.argv[2]
-output_dir  = sys.argv[3]
-
-with open(input_path, 'rt') as input_file:
-    # 漢字台本データの読み込み
-    array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
-
+def func(list_row, input_dir, output_dir):
     for i in range(1, int(list_row)+1):
-        # 出力ファイル名を設定
-        output_path = f"{output_dir}/{i:04}.txt"
+        # 入出力ファイル名を設定
+        input_path  = f"{input_dir}/{i:04}.lab"
+        output_path = f"{output_dir}/{i:04}.lab"
 
-        # 台本をローマ字に変換
-        roma = poj.g2p(array[i], kana=False)
-        # julius と pyopenjtalk とで動作が異なる記号の変換
-        roma = roma.replace('pau', 'sp').replace('cl', 'q').replace('v', 'b')
-        # ローマ字台本 (小文字) データの書き出し
-        with open(output_path, 'wt') as output_file:
-            output_file.write(roma.lower()) # 書き出し
+        with open(input_path, 'rt') as input_file:
+            # ラベルデータの読み込み
+            array = list(csv.reader(input_file, delimiter = ' ')) # label データを 2 次元配列に格納
+            for row in array: del row[2] # ラベル情報 (3 列目) の削除
+            # ラベルデータの書き出し
+            with open(output_path, 'wt') as output_file:
+                writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
+                writer.writerows(array)
+
+if __name__ == '__main__':
+    func(sys.argv[1], sys.argv[2], sys.argv[3])
