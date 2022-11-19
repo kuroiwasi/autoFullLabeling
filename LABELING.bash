@@ -33,9 +33,9 @@ corpath="./src/corpus/${corpus}"
 wav_file="./wav"                              # 音声ファイルのパス
 root_of_labels="./temp/labels"                # ラベルフォルダのルート
 root_of_logfiles="./temp/log"                 # ログフォルダのルート
-modded_wav="./src/tools/segmentation-kit/wav" # レート調整された音声ファイル
-segment_kit="./src/tools/segmentation-kit"    # 音素セグメンテーションキット
-dir_of_scripts="./src/bin/src"                # スクリプトの保存フォルダ
+segment_kit="./src/segmentation-kit"          # 音素セグメンテーションキット
+modded_wav="${segment_kit}/wav"               # レート調整された音声ファイル
+dir_of_scripts="./bin"                        # スクリプトの保存フォルダ
 output_dir="./output"                         # 最終結果の保存場所
 
 # ディレクトリをリフレッシュ

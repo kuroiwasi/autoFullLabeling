@@ -1,9 +1,8 @@
 /wav/*
 /output/*
 /temp/*
-/src/tools/segmentation-kit/wav/
+/**/segmentation-kit/wav/
 /**/__pycache__
 .DS_Store
-/.devcontainer/
 
 !/**/.gitkeep
