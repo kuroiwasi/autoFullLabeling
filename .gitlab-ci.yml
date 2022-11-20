@@ -34,9 +34,10 @@ exec-job:
   image: ubuntu:22.04
   stage: exec
   script:
+    - ls -l
     # ライブラリのインストール
-    - apt-get update -q
-    - apt-get install -yq build-essential cmake libasound2 libpulse0 libsndfile1 python3 python3-pip 
+    - apt-get -q update
+    - apt-get -q install -y build-essential cmake libasound2 libpulse0 libsndfile1 python3 python3-pip 
     - pip3 install -r src/requirements.txt
     # テスト用コーパスのダウンロード
     - wget ss-takashi.sakura.ne.jp/corpus/jsut_ver1.1.zip
