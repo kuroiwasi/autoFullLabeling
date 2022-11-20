@@ -31,6 +31,8 @@ stages:          # List of stages for jobs, and their order of execution
 #    - echo "lint-foo"
 
 Ubuntu2204:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
   image: ubuntu:22.04
   stage: exec-job
   script:
