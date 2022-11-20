@@ -4,5 +4,7 @@
 /**/segmentation-kit/wav/
 /**/__pycache__
 .DS_Store
+Dockerfile
+docker-compose.yml
 
 !/**/.gitkeep
