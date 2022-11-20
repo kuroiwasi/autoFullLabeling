@@ -36,7 +36,7 @@ Ubuntu2204:
   script:
     # ライブラリのインストール
     - apt-get update
-    - apt-get install -y build-essential cmake libasound2 libpulse0 libsndfile1 python3 python3-pip 
+    - apt-get install -y build-essential cmake libasound2 libpulse0 libsndfile1 python3 python3-pip wget
     - pip3 install -r src/requirements.txt
     # テスト用コーパスのダウンロード
     - wget ss-takashi.sakura.ne.jp/corpus/jsut_ver1.1.zip
