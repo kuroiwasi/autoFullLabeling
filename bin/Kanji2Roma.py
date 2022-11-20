@@ -25,9 +25,11 @@ def func(list_row, input_path, output_dir):
         # 漢字台本データの読み込み
         array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
 
-        for i in range(1, int(list_row)+1):
+        for i in range(0, int(list_row)):
+            file_index = i + 1
+
             # 出力ファイル名を設定
-            output_path = f"{output_dir}/{i:04}.txt"
+            output_path = f"{output_dir}/{file_index:04}.txt"
 
             # 台本をローマ字に変換
             roma = poj.g2p(array[i], kana=False)

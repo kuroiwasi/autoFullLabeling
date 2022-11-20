@@ -22,10 +22,12 @@ import librosa
 import soundfile as sf
 
 def func(list_row, input_dir, output_dir):
-    for i in range(1, int(list_row)+1):
+    for i in range(0, int(list_row)):
+        file_index = i + 1
+
         # 入出力ファイル名を指定
-        input_path  = f"{input_dir}/BASIC5000_{i:04}.wav"
-        output_path = f"{output_dir}/{i:04}.wav"
+        input_path  = f"{input_dir}/BASIC5000_{file_index:04}.wav"
+        output_path = f"{output_dir}/{file_index:04}.wav"
         
         # sr: 16kHz, rate: 16bit の PCM 形式に音声を変換して出力
         y, sr = librosa.core.load(input_path, sr=16000, mono=True)
