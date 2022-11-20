@@ -33,9 +33,9 @@ corpath="./src/corpus/${corpus}"
 wav_file="./wav"                              # 音声ファイルのパス
 root_of_labels="./temp/labels"                # ラベルフォルダのルート
 root_of_logfiles="./temp/log"                 # ログフォルダのルート
-modded_wav="./src/tools/segmentation-kit/wav" # レート調整された音声ファイル
-segment_kit="./src/tools/segmentation-kit"    # 音素セグメンテーションキット
-dir_of_scripts="./src/bin/src"                # スクリプトの保存フォルダ
+segment_kit="./src/segmentation-kit"          # 音素セグメンテーションキット
+modded_wav="${segment_kit}/wav"               # レート調整された音声ファイル
+dir_of_scripts="./src/bin"                    # スクリプトの保存フォルダ
 output_dir="./output"                         # 最終結果の保存場所
 
 # ディレクトリをリフレッシュ
@@ -55,6 +55,11 @@ for index in ${step_dir[@]}; do mkdir ${index}; done
 # ログの保存先パスを設定
 log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.log" \
 "${root_of_logfiles}/04_segment.log")
+
+# gitkeep の追加
+touch output/.gitkeep
+touch temp/.gitkeep
+touch wav/.gitkeep
 
 # コーパス -> 時間情報なしフルコンテキストラベル
 echo "step 1: 台本をフルコンテキストラベルに変換"
