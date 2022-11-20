@@ -18,7 +18,7 @@
 
 stages:          # List of stages for jobs, and their order of execution
 #  - test
-  - execution
+  - exec-job
 
 #unit-test-job:   # This job runs in the test stage.
 #  stage: test    # It only starts when the job in the build stage completes successfully.
@@ -30,9 +30,9 @@ stages:          # List of stages for jobs, and their order of execution
 #  script:
 #    - echo "lint-foo"
 
-exec-job:
+Ubuntu2204:
   image: ubuntu:22.04
-  stage: ubuntu:22.04
+  stage: exec-job
   script:
     # ライブラリのインストール
     - apt-get update
