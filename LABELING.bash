@@ -56,6 +56,11 @@ for index in ${step_dir[@]}; do mkdir ${index}; done
 log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.log" \
 "${root_of_logfiles}/04_segment.log")
 
+# gitkeep の追加
+touch output/.gitkeep
+touch temp/.gitkeep
+touch wav/.gitkeep
+
 # コーパス -> 時間情報なしフルコンテキストラベル
 echo "step 1: 台本をフルコンテキストラベルに変換"
 python3 ${dir_of_scripts}/Kanji2Full.py ${list_row} ${corpath} ${step_dir[1]}
