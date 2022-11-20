@@ -18,7 +18,7 @@
 
 stages:          # List of stages for jobs, and their order of execution
 #  - test
-  - exec
+  - execution
 
 #unit-test-job:   # This job runs in the test stage.
 #  stage: test    # It only starts when the job in the build stage completes successfully.
@@ -32,7 +32,7 @@ stages:          # List of stages for jobs, and their order of execution
 
 exec-job:
   image: ubuntu:22.04
-  stage: exec
+  stage: ubuntu22.04
   script:
     - ls -l ./src
     # ライブラリのインストール
