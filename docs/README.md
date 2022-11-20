@@ -1,6 +1,3 @@
-# これはなに
-これは [ttslearn](https://github.com/r9y9/ttslearn) を用いた DNNTTS 学習のために必要な時間情報付きフルコンテキストラベルを Julius と pyopenjtalk を使って、コーパス (台本) と音声から生成するプログラムです。標準のコーパスは `JUST コーパス/BASIC5000` で、場所は `src/corpus/BASIC5000.txt` です。コーパスを置き換える場合はこれを置き換えて、実行ファイルである `LABELING.bash` の設定も書き換えてください。
-
 # 動作確認環境 (GitLab CI/CD でテスト)
 * Ubuntu 22.04
 
