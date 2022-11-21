@@ -58,7 +58,6 @@ log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.lo
 "${root_of_logfiles}/04_segment.log")
 
 # gitkeep の追加
-touch output/.gitkeep
 touch wav/.gitkeep
 
 # コーパス -> 時間情報なしフルコンテキストラベル
