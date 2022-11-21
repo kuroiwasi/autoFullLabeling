@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # エラー時に停止させる
 
-:<<LISENCE
+:<<LICENCE
 Copyright 2022 Fumiyoshi MATANO
 
 This file is part of DNNTTS-With-YourVoice.
@@ -16,7 +16,7 @@ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more de
 
 You should have received a copy of the GNU General Public License along with DNNTTS-With-YourVoice.
 If not, see <https://www.gnu.org/licenses/>. 
-LISENCE
+LICENCE
 
 ### ここは実行前に設定する変数 ###
 
@@ -31,8 +31,9 @@ list_row=5000
 
 corpath="./src/corpus/${corpus}"
 wav_file="./wav"                              # 音声ファイルのパス
-root_of_labels="./temp/labels"                # ラベルフォルダのルート
-root_of_logfiles="./temp/log"                 # ログフォルダのルート
+temp_dir="./.temp"                            # temp フォルダ
+root_of_labels="${temp_dir}/labels"           # ラベルフォルダのルート
+root_of_logfiles="${temp_dir}/log"            # ログフォルダのルート
 segment_kit="./src/segmentation-kit"          # 音素セグメンテーションキット
 modded_wav="${segment_kit}/wav"               # レート調整された音声ファイル
 dir_of_scripts="./src/bin"                    # スクリプトの保存フォルダ
@@ -58,7 +59,6 @@ log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.lo
 
 # gitkeep の追加
 touch output/.gitkeep
-touch temp/.gitkeep
 touch wav/.gitkeep
 
 # コーパス -> 時間情報なしフルコンテキストラベル
