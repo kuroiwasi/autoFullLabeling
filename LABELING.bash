@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # エラー時に停止させる
 
-:<<LISENCE
+:<<LICENCE
 Copyright 2022 Fumiyoshi MATANO
 
 This file is part of DNNTTS-With-YourVoice.
@@ -16,12 +16,12 @@ FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more de
 
 You should have received a copy of the GNU General Public License along with DNNTTS-With-YourVoice.
 If not, see <https://www.gnu.org/licenses/>. 
-LISENCE
+LICENCE
 
 ### ここは実行前に設定する変数 ###
 
-# コーパスファイル名
-corpus="BASIC5000.txt"
+# コーパスのパス
+corpath="./src/corpus/BASIC5000.txt"
 # コーパスの文章数
 list_row=5000
 
@@ -29,64 +29,77 @@ list_row=5000
 ### ここから下は触ると大変なことになるかもだから触るなら心して触れ ###
 ############################################################
 
-corpath="./src/corpus/${corpus}"
-wav_file="./wav"                              # 音声ファイルのパス
-root_of_labels="./temp/labels"                # ラベルフォルダのルート
-root_of_logfiles="./temp/log"                 # ログフォルダのルート
-segment_kit="./src/segmentation-kit"          # 音素セグメンテーションキット
-modded_wav="${segment_kit}/wav"               # レート調整された音声ファイル
-dir_of_scripts="./src/bin"                    # スクリプトの保存フォルダ
-output_dir="./output"                         # 最終結果の保存場所
+wav_dir="./wav"                             # 音声フォルダ
+
+temp_dir="./.temp"                          # temp フォルダ
+labels_dir="${temp_dir}/labels"             # ラベルフォルダ
+logfiles_dir="${temp_dir}/log"              # ログフォルダ
+
+src_dir="./src"
+segment_kit="${src_dir}/segmentation-kit"   # 音素セグメンテーションキット
+segment_wav="${segment_kit}/wav"             # レート調整された音声ファイル
+scripts_dir="${src_dir}/bin"                # スクリプトの保存フォルダ
+
+output_dir="./output"                       # 最終結果の保存場所
+output_labels="${output_dir}/lab"           # 最終ラベル
+output_wavs="${output_dir}/wav"              # 最終音声
 
 # ディレクトリをリフレッシュ
-refresh_dir=("${root_of_labels}" "${root_of_logfiles}" "${segment_kit}/wav" \
-"${output_dir}/wav ${output_dir}/lab" "${modded_wav}")  
-for index in ${refresh_dir[@]}; do
-    if [ -d ${index} ]; then rm -rf ${index}; fi
-    mkdir -p ${index}
+## ディレクトリを一度削除
+remove_dirs=(${temp_dir} ${segment_wav} ${output_dir})
+for dir in ${remove_dirs[@]}
+do
+    if [ -d ${dir} ]; then rm -rf ${dir}; fi
+done
+## 必要なディレクトリを作成
+create_dirs=(${temp_dir} ${labels_dir} ${logfiles_dir} ${segment_wav} \
+${output_dir} ${output_labels} ${output_wavs})  
+for dir in ${create_dirs[@]}
+do
+    mkdir -p ${dir}
+done
+## ラベルの一時保存ディレクトリを作成
+step_dirs=("${labels_dir}/00" "${labels_dir}/01_時間情報削除済みラベル" \
+"${labels_dir}/02_ローマ字台本" "${labels_dir}/03_新時間情報モノフォンラベル" \
+"${labels_dir}/04_時間情報のみ" "${labels_dir}/05_時間情報付きフルコンテキストラベル")
+for dir in ${step_dirs[@]}
+do
+    mkdir -p ${dir}
 done
 
-# ラベル用ディレクトリを作成
-step_dir=("${root_of_labels}/00" "${root_of_labels}/01_時間情報削除済みラベル" \
-"${root_of_labels}/02_ローマ字台本" "${root_of_labels}/03_新時間情報モノフォンラベル" \
-"${root_of_labels}/04_時間情報のみ" "${root_of_labels}/05_時間情報付きフルコンテキストラベル")
-for index in ${step_dir[@]}; do mkdir ${index}; done
-
 # ログの保存先パスを設定
-log_file=("${root_of_logfiles}/00_configure.log" "${root_of_logfiles}/00_make.log" \
-"${root_of_logfiles}/04_segment.log")
+log_file=("${logfiles_dir}/00_configure.log" "${logfiles_dir}/00_make.log" \
+"${logfiles_dir}/04_segment.log")
 
 # gitkeep の追加
-touch output/.gitkeep
-touch temp/.gitkeep
 touch wav/.gitkeep
 
 # コーパス -> 時間情報なしフルコンテキストラベル
 echo "step 1: 台本をフルコンテキストラベルに変換"
-python3 ${dir_of_scripts}/Kanji2Full.py ${list_row} ${corpath} ${step_dir[1]}
+python3 ${scripts_dir}/Kanji2Full.py ${list_row} ${corpath} ${step_dirs[1]}
 
 # コーパス -> ローマ字ファイル
 echo "step 2: julius 用のローマ字台本ファイル作成"
-python3 ${dir_of_scripts}/Kanji2Roma.py ${list_row} ${corpath} ${step_dir[2]}
+python3 ${scripts_dir}/Kanji2Roma.py ${list_row} ${corpath} ${step_dirs[2]}
 
 # 録音音声 & ローマ字ファイル -> 時間情報ありモノフォンラベル
 echo "step 3: julius を利用した強制音素アライメント"
 ## データのコピー
-cp ${step_dir[2]}/* ${segment_kit}/wav # ローマ字台本をコピー
-python3 ${dir_of_scripts}/Change_Rate.py ${list_row} ${wav_file} ${modded_wav} # 音声ファイルをコピー
+cp -RT ${step_dirs[2]} ${segment_wav} # ローマ字台本をコピー
+python3 ${scripts_dir}/Change_Rate.py ${list_row} ${wav_dir} ${segment_wav} # 音声ファイルをコピー
 ## 強制音素アライメントの生成をサブシェルで実行
 (cd ${segment_kit}; perl segment_julius.pl) >> ${log_file[2]} 2>&1
 ## 生成されたデータをコピー
-cp ${segment_kit}/wav/*.lab ${step_dir[3]}
+cp ${segment_wav}/*.lab ${step_dirs[3]}
 
 # 時間情報ありモノフォンラベル -> 時間情報のみ
 echo "step 4: 音素アライメントから時間情報の抽出"
-python3 ${dir_of_scripts}/Remove_Time.py ${list_row} ${step_dir[3]} ${step_dir[4]}
+python3 ${scripts_dir}/Remove_Time.py ${list_row} ${step_dirs[3]} ${step_dirs[4]}
 
 # 時間情報のみ & 時間情報なしフルコンテキストラベル -> 時間情報ありフルコンテキストラベル
 echo "step 5: 時間情報ありフルコンテキストラベルの作成"
-python3 ${dir_of_scripts}/Connect_Files.py ${list_row} ${step_dir[1]} ${step_dir[4]} ${step_dir[5]}
+python3 ${scripts_dir}/Connect_Files.py ${list_row} ${step_dirs[1]} ${step_dirs[4]} ${step_dirs[5]}
 
 # output にファイルを出力
-cp -RT ${step_dir[5]} ${output_dir}/lab
-cp -RT ${wav_file} ${output_dir}/wav
+cp -RT ${step_dirs[5]} ${output_labels}
+cp -RT ${wav_dir} ${output_wavs}
