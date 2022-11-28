@@ -1,6 +1,7 @@
 /wav/*
 /output/
 /.temp/
+/**/julius_bin/
 /**/segmentation-kit/wav/
 /**/__pycache__
 .DS_Store
