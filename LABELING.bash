@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e # エラー時に停止させる
+script_path=$(cd $(dirname ${0}); pwd)
 
 :<<LICENCE
 Copyright 2022 Fumiyoshi MATANO
@@ -21,7 +22,7 @@ LICENCE
 ### ここは実行前に設定する変数 ###
 
 # コーパスのパス
-corpath="./src/corpus/BASIC5000.txt"
+corpath="${script_path}/src/corpus/BASIC5000.txt"
 # コーパスの文章数
 list_row=5000
 
@@ -29,20 +30,20 @@ list_row=5000
 ### ここから下は触ると大変なことになるかもだから触るなら心して触れ ###
 ############################################################
 
-wav_dir="./wav"                             # 音声フォルダ
+wav_dir="${script_path}/wav"                # 音声フォルダ
 
-temp_dir="./.temp"                          # temp フォルダ
+temp_dir="${script_path}/.temp"             # temp フォルダ
 labels_dir="${temp_dir}/labels"             # ラベルフォルダ
 logfiles_dir="${temp_dir}/log"              # ログフォルダ
 
-src_dir="./src"
+src_dir="${script_path}/src"
 segment_kit="${src_dir}/segmentation-kit"   # 音素セグメンテーションキット
-segment_wav="${segment_kit}/wav"             # レート調整された音声ファイル
+segment_wav="${segment_kit}/wav"            # レート調整された音声ファイル
 scripts_dir="${src_dir}/bin"                # スクリプトの保存フォルダ
 
-output_dir="./output"                       # 最終結果の保存場所
+output_dir="${script_path}/output"          # 最終結果の保存場所
 output_labels="${output_dir}/lab"           # 最終ラベル
-output_wavs="${output_dir}/wav"              # 最終音声
+output_wavs="${output_dir}/wav"             # 最終音声
 
 # ディレクトリをリフレッシュ
 ## ディレクトリを一度削除
@@ -71,8 +72,8 @@ done
 log_file=("${logfiles_dir}/00_configure.log" "${logfiles_dir}/00_make.log" \
 "${logfiles_dir}/04_segment.log")
 
-# gitkeep の追加
-touch wav/.gitkeep
+# 削除されてしまう gitkeep の復元
+touch ${wav_dir}/.gitkeep
 
 # コーパス -> 時間情報なしフルコンテキストラベル
 echo "step 1: 台本をフルコンテキストラベルに変換"
