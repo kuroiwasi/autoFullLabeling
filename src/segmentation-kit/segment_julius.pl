@@ -46,7 +46,7 @@ $leave_dict_flag=0;
 $debug_flag=0;
 
 ## julius executable
-$juliusbin="../julius-4.6/julius/julius";
+$juliusbin="../julius_bin/julius/julius";
 
 ## acoustic model
 $hmmdefs="./models/hmmdefs_monof_mix16_gid.binhmm"; # monophone model
