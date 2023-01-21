@@ -49,7 +49,7 @@ output_wavs="${output_dir}/wav"             # 最終音声
 
 # ディレクトリをリフレッシュ
 ## ディレクトリを一度削除
-remove_dirs=(${temp_dir} ${segment_wav} ${output_dir})
+remove_dirs=(${temp_dir} ${segment_wav} ${output_dir} ${julius_bin_dir})
 for dir in ${remove_dirs[@]}; do rm -rf ${dir}; done
 
 ## 必要なディレクトリを作成
@@ -70,9 +70,9 @@ log_file=("${logfiles_dir}/00_configure.log" "${logfiles_dir}/00_make.log" \
 # 削除されてしまう gitkeep の復元
 touch ${wav_dir}/.gitkeep
 
-# step 0: julius のビルド (コピーしてからビルドしたほうが管理が楽)
+# step 0: julius のビルド
 echo 'step 0: julius のビルド'
-cp -R ${julius_dir} ${julius_bin_dir}
+cp -RT ${julius_dir} ${julius_bin_dir}
 (
     cd ${julius_bin_dir}
     ./configure >> ${log_file[0]} 2>&1
