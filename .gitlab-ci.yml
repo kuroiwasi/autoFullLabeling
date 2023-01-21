@@ -40,9 +40,5 @@ Ubuntu2204:
     - python3 -m venv myenv
     - source myenv/bin/activate
     - pip3 install -r src/requirements.txt
-    # テスト用コーパスのダウンロード
-    - wget -q ss-takashi.sakura.ne.jp/corpus/jsut_ver1.1.zip
-    - unzip -q jsut_ver1.1.zip
-    - cp -RT jsut_ver1.1/basic5000/wav wav
     # 実行
-    - bash LABELING.bash
+    - bash LABELING.bash -m test

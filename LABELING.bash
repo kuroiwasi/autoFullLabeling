@@ -64,6 +64,26 @@ step_dirs=( \
 )
 for dir in ${step_dirs[@]}; do mkdir -p ${dir}; done
 
+while getopts m: opt
+do
+    case "${opt}" in
+        m) exec_mode=${OPTARG};;
+        *) exit;;
+    esac
+done
+
+
+if [ "${exec_mode}" = "test" ]
+then
+    echo 'step -1: テストモード (BASIC5000 読み上げ音声のダウンロード) '
+    (
+        cd ${DIR_TEMP}
+        wget -q ss-takashi.sakura.ne.jp/corpus/jsut_ver1.1.zip
+        unzip -q jsut_ver1.1.zip
+    )
+    cp -RT ${DIR_TEMP}/jsut_ver1.1/basic5000/wav ${DIR_WAV}
+fi
+
 
 echo 'step 0: julius のビルド'
 cp -RT ${DIR_SRC_JULIUS_SOURCE} ${DIR_SRC_JULIUS_BIN}
