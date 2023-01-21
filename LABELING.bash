@@ -16,15 +16,15 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 LICENCE
 
-set -e
-WORK_DIR=$(cd $(dirname ${0}); pwd)
-
 ### ここは実行前に設定する変数 ###
 
 CORPATH="${WORK_DIR}/src/corpus/BASIC5000.txt"
 LIST_ROW=5000 # コーパスの文章数
 
 ### ここまで ###
+
+set -e
+WORK_DIR=$(cd $(dirname ${0}); pwd)
 
 DIR_WAV="${WORK_DIR}/wav"     
 DIR_TEMP="${WORK_DIR}/.temp"
@@ -58,9 +58,9 @@ create_dirs=( \
 for dir in ${create_dirs[@]}; do mkdir -p ${dir}; done
 
 step_dirs=( \
-    "${LABEL_DIR}/00" "${LABEL_DIR}/01_時間情報削除済みラベル" \
-    "${LABEL_DIR}/02_ローマ字台本" "${LABEL_DIR}/03_新時間情報モノフォンラベル" \
-    "${LABEL_DIR}/04_時間情報のみ" "${LABEL_DIR}/05_時間情報付きフルコンテキストラベル" \
+    "${DIR_TEMP_LABELS}/00" "${DIR_TEMP_LABELS}/01_時間情報削除済みラベル" \
+    "${DIR_TEMP_LABELS}/02_ローマ字台本" "${DIR_TEMP_LABELS}/03_新時間情報モノフォンラベル" \
+    "${DIR_TEMP_LABELS}/04_時間情報のみ" "${DIR_TEMP_LABELS}/05_時間情報付きフルコンテキストラベル" \
 )
 for dir in ${step_dirs[@]}; do mkdir -p ${dir}; done
 
