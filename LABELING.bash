@@ -1,7 +1,4 @@
 #!/bin/bash
-set -e # エラー時に停止させる
-labeling_path=$(cd $(dirname ${0}); pwd)
-
 :<<LICENCE
 Copyright 2022 Fumiyoshi MATANO
 
@@ -19,92 +16,93 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 LICENCE
 
+set -e
+WORK_DIR=$(cd $(dirname ${0}); pwd)
+
 ### ここは実行前に設定する変数 ###
 
-# コーパスのパス
-corpath="${labeling_path}/src/corpus/BASIC5000.txt"
-# コーパスの文章数
-list_row=5000
+CORPATH="${WORK_DIR}/src/corpus/BASIC5000.txt"
+LIST_ROW=5000 # コーパスの文章数
 
-############################################################
-### ここから下は触ると大変なことになるかもだから触るなら心して触れ ###
-############################################################
+### ここまで ###
 
-wav_dir="${labeling_path}/wav"                # 音声フォルダ
+DIR_WAV="${WORK_DIR}/wav"     
+DIR_TEMP="${WORK_DIR}/.temp"
+DIR_TEMP_LABELS="${DIR_TEMP}/labels"
+DIR_TEMP_LOG="${DIR_TEMP}/log"
+DIR_TEMP_LOG_FILE=( \
+    "${DIR_TEMP_LOG}/julius_configure.log" \
+    "${DIR_TEMP_LOG}/julius_make.log" \
+    "${DIR_TEMP_LOG}/exec_segmentation.log" \
+)
+DIR_SRC="${WORK_DIR}/src"
+DIR_SRC_SCRIPTS="${DIR_SRC}/bin"
+DIR_SRC_JULIUS_SOURCE="${DIR_SRC}/julius-4.6"
+DIR_SRC_JULIUS_BIN="${DIR_SRC}/julius_bin"
+DIR_SRC_SEGMRNT_KIT="${DIR_SRC}/segmentation-kit"
+DIR_SRC_SEGMENT_WAV="${DIR_SRC_SEGMRNT_KIT}/wav"
 
-temp_dir="${labeling_path}/.temp"             # temp フォルダ
-labels_dir="${temp_dir}/labels"             # ラベルフォルダ
-logfiles_dir="${temp_dir}/log"              # ログフォルダ
+DIR_OUTPUT="${WORK_DIR}/output"
+DIR_OUTPUT_LABELS="${DIR_OUTPUT}/lab"
+DIR_OUTPUT_WAV="${DIR_OUTPUT}/wav"
 
-src_dir="${labeling_path}/src"
-scripts_dir="${src_dir}/bin"                # スクリプトの保存フォルダ
-julius_dir="${src_dir}/julius-4.6"          # julius のソースコード
-julius_bin_dir="${src_dir}/julius_bin"      # julius のバイナリ
-segment_kit="${src_dir}/segmentation-kit"   # 音素セグメンテーションキット
-segment_wav="${segment_kit}/wav"            # レート調整された音声ファイル
 
-output_dir="${labeling_path}/output"          # 最終結果の保存場所
-output_labels="${output_dir}/lab"           # 最終ラベル
-output_wavs="${output_dir}/wav"             # 最終音声
-
-# ディレクトリをリフレッシュ
-## ディレクトリを一度削除
-remove_dirs=(${temp_dir} ${segment_wav} ${output_dir} ${julius_bin_dir})
+remove_dirs=( ${DIR_TEMP} ${DIR_SRC_JULIUS_BIN} ${DIR_SRC_SEGMENT_WAV} ${DIR_OUTPUT})
 for dir in ${remove_dirs[@]}; do rm -rf ${dir}; done
 
-## 必要なディレクトリを作成
-create_dirs=(${temp_dir} ${labels_dir} ${logfiles_dir} ${segment_wav} \
-${output_dir} ${output_labels} ${output_wavs})  
+create_dirs=( \
+    ${DIR_TEMP} ${DIR_TEMP_LABELS} ${DIR_TEMP_LOG} \
+    ${DIR_SRC_SEGMENT_WAV} \
+    ${DIR_OUTPUT} ${DIR_OUTPUT_LABELS} ${DIR_OUTPUT_WAV} \
+)  
 for dir in ${create_dirs[@]}; do mkdir -p ${dir}; done
 
-## ラベルの一時保存ディレクトリを作成
-step_dirs=("${labels_dir}/00" "${labels_dir}/01_時間情報削除済みラベル" \
-"${labels_dir}/02_ローマ字台本" "${labels_dir}/03_新時間情報モノフォンラベル" \
-"${labels_dir}/04_時間情報のみ" "${labels_dir}/05_時間情報付きフルコンテキストラベル")
+step_dirs=( \
+    "${LABEL_DIR}/00" "${LABEL_DIR}/01_時間情報削除済みラベル" \
+    "${LABEL_DIR}/02_ローマ字台本" "${LABEL_DIR}/03_新時間情報モノフォンラベル" \
+    "${LABEL_DIR}/04_時間情報のみ" "${LABEL_DIR}/05_時間情報付きフルコンテキストラベル" \
+)
 for dir in ${step_dirs[@]}; do mkdir -p ${dir}; done
 
-# ログの保存先パスを設定
-log_file=("${logfiles_dir}/00_configure.log" "${logfiles_dir}/00_make.log" \
-"${logfiles_dir}/04_segment.log")
 
-# 削除されてしまう gitkeep の復元
-touch ${wav_dir}/.gitkeep
-
-# step 0: julius のビルド
 echo 'step 0: julius のビルド'
-cp -RT ${julius_dir} ${julius_bin_dir}
+cp -RT ${DIR_SRC_JULIUS_SOURCE} ${DIR_SRC_JULIUS_BIN}
 (
-    cd ${julius_bin_dir}
-    ./configure >> ${log_file[0]} 2>&1
-    make >> ${log_file[1]} 2>&1
+    cd ${DIR_SRC_JULIUS_BIN}
+    ./configure >>  ${DIR_TEMP_LOG_FILE[0]} 2>&1
+    make >>         ${DIR_TEMP_LOG_FILE[1]} 2>&1
 )
 
-# step 1: コーパス -> 時間情報なしフルコンテキストラベル
-echo "step 1: 台本をフルコンテキストラベルに変換"
-python3 ${scripts_dir}/Kanji2Full.py ${list_row} ${corpath} ${step_dirs[1]}
 
-# step 2: コーパス -> ローマ字ファイル
-echo "step 2: julius 用のローマ字台本ファイル作成"
-python3 ${scripts_dir}/Kanji2Roma.py ${list_row} ${corpath} ${step_dirs[2]}
+echo "step 1: コーパス -> 時間情報なしフルコンテキストラベル"
+python3 ${DIR_SRC_SCRIPTS}/Kanji2Full.py ${LIST_ROW} \
+    ${CORPATH} ${step_dirs[1]}
 
-# step 3: 録音音声 & ローマ字ファイル -> 時間情報ありモノフォンラベル
-echo "step 3: julius を利用した強制音素アライメント"
-## データのコピー
-cp -RT ${step_dirs[2]} ${segment_wav} # ローマ字台本をコピー
-python3 ${scripts_dir}/Change_Rate.py ${list_row} ${wav_dir} ${segment_wav} # 音声ファイルをコピー
-## 強制音素アライメントの生成をサブシェルで実行
-(cd ${segment_kit}; perl segment_julius.pl) >> ${log_file[2]} 2>&1
-## 生成されたデータをコピー
-cp ${segment_wav}/*.lab ${step_dirs[3]}
 
-# step 4: 時間情報ありモノフォンラベル -> 時間情報のみ
-echo "step 4: 音素アライメントから時間情報の抽出"
-python3 ${scripts_dir}/Remove_Time.py ${list_row} ${step_dirs[3]} ${step_dirs[4]}
+echo "step 2: コーパス -> 時間情報なしモノフォンラベル"
+python3 ${DIR_SRC_SCRIPTS}/Kanji2Roma.py ${LIST_ROW} \
+    ${CORPATH} ${step_dirs[2]}
 
-# step 5: 時間情報のみ & 時間情報なしフルコンテキストラベル -> 時間情報ありフルコンテキストラベル
-echo "step 5: 時間情報ありフルコンテキストラベルの作成"
-python3 ${scripts_dir}/Connect_Files.py ${list_row} ${step_dirs[1]} ${step_dirs[4]} ${step_dirs[5]}
 
-# output にファイルを出力
-cp -RT ${step_dirs[5]} ${output_labels}
-cp -RT ${wav_dir} ${output_wavs}
+echo "step 3: 録音音声 & 時間情報なしモノフォンラベル -> 時間情報ありモノフォンラベル"
+# データのコピー
+cp -RT ${step_dirs[2]} ${DIR_SRC_SEGMENT_WAV}
+python3 ${DIR_SRC_SCRIPTS}/Change_Rate.py ${LIST_ROW} ${DIR_WAV} ${DIR_SRC_SEGMENT_WAV}
+# 時間情報ありモノフォンラベルの生成
+(cd ${DIR_SRC_SEGMRNT_KIT}; perl segment_julius.pl) >> ${log_file[2]} 2>&1
+cp ${DIR_SRC_SEGMENT_WAV}/*.lab ${step_dirs[3]} # 生成されたデータをコピー
+
+
+echo "step 4: 時間情報ありモノフォンラベル -> 時間情報"
+python3 ${DIR_SRC_SCRIPTS}/Remove_Time.py ${LIST_ROW} \
+    ${step_dirs[3]} ${step_dirs[4]}
+
+
+echo "step 5: 時間情報 & 時間情報なしフルコンテキストラベル -> 時間情報ありフルコンテキストラベル"
+python3 ${DIR_SRC_SCRIPTS}/Connect_Files.py ${LIST_ROW} \
+    ${step_dirs[1]} ${step_dirs[4]} ${step_dirs[5]}
+
+
+echo "step 6: output ディレクトリにデータを出力"
+cp -RT ${step_dirs[5]} ${DIR_OUTPUT_LABELS}
+cp -RT ${DIR_WAV} ${DIR_OUTPUT_WAV}
