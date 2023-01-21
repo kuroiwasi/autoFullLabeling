@@ -89,7 +89,7 @@ echo "step 3: 録音音声 & 時間情報なしモノフォンラベル -> 時�
 cp -RT ${step_dirs[2]} ${DIR_SRC_SEGMENT_WAV}
 python3 ${DIR_SRC_SCRIPTS}/Change_Rate.py ${LIST_ROW} ${DIR_WAV} ${DIR_SRC_SEGMENT_WAV}
 # 時間情報ありモノフォンラベルの生成
-(cd ${DIR_SRC_SEGMRNT_KIT}; perl segment_julius.pl) >> ${log_file[2]} 2>&1
+(cd ${DIR_SRC_SEGMRNT_KIT}; perl segment_julius.pl) >> ${DIR_TEMP_LOG_FILE[2]} 2>&1
 cp ${DIR_SRC_SEGMENT_WAV}/*.lab ${step_dirs[3]} # 生成されたデータをコピー
 
 
