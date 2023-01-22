@@ -26,7 +26,8 @@ LIST_ROW=5000 # コーパスの文章数
 set -e
 WORK_DIR=$(cd $(dirname ${0}); pwd)
 
-DIR_WAV="${WORK_DIR}/wav"     
+DIR_WAV="${WORK_DIR}/wav"    
+
 DIR_TEMP="${WORK_DIR}/.temp"
 DIR_TEMP_LABELS="${DIR_TEMP}/labels"
 DIR_TEMP_LOG="${DIR_TEMP}/log"
@@ -35,6 +36,7 @@ DIR_TEMP_LOG_FILE=( \
     "${DIR_TEMP_LOG}/julius_make.log" \
     "${DIR_TEMP_LOG}/exec_segmentation.log" \
 )
+
 DIR_SRC="${WORK_DIR}/src"
 DIR_SRC_SCRIPTS="${DIR_SRC}/bin"
 DIR_SRC_JULIUS_SOURCE="${DIR_SRC}/julius-4.6"
