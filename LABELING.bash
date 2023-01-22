@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 :<<LICENCE
 Copyright 2022 Fumiyoshi MATANO
 
