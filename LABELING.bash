@@ -16,15 +16,15 @@ You should have received a copy of the GNU General Public License along with DNN
 If not, see <https://www.gnu.org/licenses/>. 
 LICENCE
 
+set -e
+WORK_DIR=$(cd $(dirname ${0}); pwd)
+
 ### ここは実行前に設定する変数 ###
 
 CORPATH="${WORK_DIR}/src/corpus/BASIC5000.txt"
 LIST_ROW=5000 # コーパスの文章数
 
 ### ここまで ###
-
-set -e
-WORK_DIR=$(cd $(dirname ${0}); pwd)
 
 DIR_WAV="${WORK_DIR}/wav"    
 
