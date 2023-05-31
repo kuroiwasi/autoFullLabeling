@@ -20,22 +20,21 @@ If not, see <https://www.gnu.org/licenses/>.
 import sys
 import pyopenjtalk as poj
 
-def func(list_row, input_path, output_dir):
+def func(input_path, output_dir):
     with open(input_path, 'rt') as input_file:
         # 台本データの読み込み
-        array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
-        
-        for i in range(0, int(list_row)):
-            file_index = i + 1
+        lines = input_file.readlines()
+        for line in lines:
+            name, text = line.replace('\n', '').split(':')
 
             # 出力ファイルの設定
-            output_path = f"{output_dir}/{file_index:04}.lab"
+            output_path = f"{output_dir}/{name}.lab"
             # フルコンテキストラベルの生成
-            full_labels = poj.extract_fullcontext(array[i])
+            full_labels = poj.extract_fullcontext(text)
             # ラベルデータの書き出し
             output_str = '\n'.join(full_labels) # 1 次元配列を改行文字列に変換
             with open(output_path, 'wt') as output_file:
                 output_file.write(output_str) # 書き出し
 
 if __name__ == '__main__':
-    func(sys.argv[1], sys.argv[2], sys.argv[3])
+    func(sys.argv[1], sys.argv[2])

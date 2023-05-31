@@ -21,8 +21,8 @@ WORK_DIR=$(cd $(dirname ${0}); pwd)
 
 ### ここは実行前に設定する変数 ###
 
-CORPATH="${WORK_DIR}/src/corpus/BASIC5000.txt"
-LIST_ROW=5000 # コーパスの文章数
+CORPATH="${WORK_DIR}/src/corpus/transcripts_utf8.txt"
+SAMPLING_RATE=16000
 
 ### ここまで ###
 
@@ -97,31 +97,30 @@ cp -RT ${DIR_SRC_JULIUS_SOURCE} ${DIR_SRC_JULIUS_BIN}
 
 
 echo "step 1: コーパス -> 時間情報なしフルコンテキストラベル"
-python3 ${DIR_SRC_SCRIPTS}/Kanji2Full.py ${LIST_ROW} \
-    ${CORPATH} ${step_dirs[1]}
+python3 ${DIR_SRC_SCRIPTS}/Kanji2Full.py ${CORPATH} ${step_dirs[1]}
 
 
 echo "step 2: コーパス -> 時間情報なしモノフォンラベル"
-python3 ${DIR_SRC_SCRIPTS}/Kanji2Roma.py ${LIST_ROW} \
-    ${CORPATH} ${step_dirs[2]}
+python3 ${DIR_SRC_SCRIPTS}/Kanji2Roma.py ${CORPATH} ${step_dirs[2]}
 
 
 echo "step 3: 録音音声 & 時間情報なしモノフォンラベル -> 時間情報ありモノフォンラベル"
 # データのコピー
 cp -RT ${step_dirs[2]} ${DIR_SRC_SEGMENT_WAV}
-python3 ${DIR_SRC_SCRIPTS}/Change_Rate.py ${LIST_ROW} ${DIR_WAV} ${DIR_SRC_SEGMENT_WAV}
+python3 ${DIR_SRC_SCRIPTS}/Change_Rate.py \
+    ${CORPATH} ${DIR_WAV} ${DIR_SRC_SEGMENT_WAV} ${SAMPLING_RATE}
 # 時間情報ありモノフォンラベルの生成
 (cd ${DIR_SRC_SEGMRNT_KIT}; perl segment_julius.pl) >> ${DIR_TEMP_LOG_FILE[2]} 2>&1
 cp ${DIR_SRC_SEGMENT_WAV}/*.lab ${step_dirs[3]} # 生成されたデータをコピー
 
 
 echo "step 4: 時間情報ありモノフォンラベル -> 時間情報"
-python3 ${DIR_SRC_SCRIPTS}/Remove_Time.py ${LIST_ROW} \
+python3 ${DIR_SRC_SCRIPTS}/Remove_Time.py ${CORPATH} \
     ${step_dirs[3]} ${step_dirs[4]}
 
 
 echo "step 5: 時間情報 & 時間情報なしフルコンテキストラベル -> 時間情報ありフルコンテキストラベル"
-python3 ${DIR_SRC_SCRIPTS}/Connect_Files.py ${LIST_ROW} \
+python3 ${DIR_SRC_SCRIPTS}/Connect_Files.py ${CORPATH} \
     ${step_dirs[1]} ${step_dirs[4]} ${step_dirs[5]}
 
 

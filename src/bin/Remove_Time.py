@@ -20,21 +20,23 @@ If not, see <https://www.gnu.org/licenses/>.
 import sys
 import csv
 
-def func(list_row, input_dir, output_dir):
-    for i in range(0, int(list_row)):
-        file_index = i + 1
-        # 入出力ファイル名を設定
-        input_path  = f"{input_dir}/{file_index:04}.lab"
-        output_path = f"{output_dir}/{file_index:04}.lab"
+def func(input_path, input_dir, output_dir):
+    with open(input_path, mode='r') as input_file:
+        lines = input_file.readlines()
+        for line in lines:
+            name = line.split(':')[0]
+            # 入出力ファイル名を設定
+            input_path  = f"{input_dir}/{name}.lab"
+            output_path = f"{output_dir}/{name}.lab"
 
-        with open(input_path, 'rt') as input_file:
-            # ラベルデータの読み込み
-            array = list(csv.reader(input_file, delimiter = ' ')) # label データを 2 次元配列に格納
-            for row in array: del row[2] # ラベル情報 (3 列目) の削除
-            # ラベルデータの書き出し
-            with open(output_path, 'wt') as output_file:
-                writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
-                writer.writerows(array)
+            with open(input_path, 'rt') as input_file:
+                # ラベルデータの読み込み
+                array = list(csv.reader(input_file, delimiter = ' ')) # label データを 2 次元配列に格納
+                for row in array: del row[2] # ラベル情報 (3 列目) の削除
+                # ラベルデータの書き出し
+                with open(output_path, 'wt') as output_file:
+                    writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
+                    writer.writerows(array)
 
 if __name__ == '__main__':
     func(sys.argv[1], sys.argv[2], sys.argv[3])

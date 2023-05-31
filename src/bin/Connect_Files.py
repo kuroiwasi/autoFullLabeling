@@ -21,25 +21,31 @@ import csv
 import sys
 import numpy as np
 
-def func(list_row, label_dir, time_dir, output_dir):
-    for i in range(0, int(list_row)):
-        file_index = i + 1
+def func(input_path, label_dir, time_dir, output_dir):
+    with open(input_path, mode='r') as input_file:
+        lines = input_file.readlines()
+        for line in lines:
+            name = line.split(':')[0]
 
-        # 入出力ファイル名を設定
-        label_path  = f"{label_dir}/{file_index:04}.lab"
-        time_path   = f"{time_dir}/{file_index:04}.lab"
-        output_path = f"{output_dir}/BASIC5000_{file_index:04}.lab"
+            # 入出力ファイル名を設定
+            label_path  = f"{label_dir}/{name}.lab"
+            time_path   = f"{time_dir}/{name}.lab"
+            output_path = f"{output_dir}/{name}.lab"
 
-        with open(label_path, 'rt') as label_file:
-            with open(time_path, 'rt') as time_file:
-                # 各種データの読み込み
-                time_array = np.array(list(csv.reader(time_file, delimiter = ' ')))   # time データを 2 次元配列に格納
-                label_array = np.array(list(csv.reader(label_file, delimiter = ' '))) # label データを 2 次元配列に格納
-                array = np.concatenate([time_array, label_array], axis=1)             # time と label を横に結合
-                # ラベルデータの書き出し
-                with open(output_path, 'wt') as output_file:
-                    writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
-                    writer.writerows(array)
+            with open(label_path, 'rt') as label_file:
+                with open(time_path, 'rt') as time_file:
+                    # 各種データの読み込み
+                    time_array = np.array(list(csv.reader(time_file, delimiter = ' ')))   # time データを 2 次元配列に格納
+                    label_array = np.array(list(csv.reader(label_file, delimiter = ' '))) # label データを 2 次元配列に格納
+                    
+                    # 解析に失敗したファイルはスキップする
+                    if(len(time_array) != len(label_array)):
+                        continue
+                    array = np.concatenate([time_array, label_array], axis=1)             # time と label を横に結合
+                    # ラベルデータの書き出し
+                    with open(output_path, 'wt') as output_file:
+                        writer = csv.writer(output_file, delimiter=' ', lineterminator='\n')
+                        writer.writerows(array)
 
 if __name__ == '__main__':
     func(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

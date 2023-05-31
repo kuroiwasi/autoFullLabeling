@@ -20,19 +20,19 @@ If not, see <https://www.gnu.org/licenses/>.
 import sys
 import pyopenjtalk as poj
 
-def func(list_row, input_path, output_dir):
+def func(input_path, output_dir):
     with open(input_path, 'rt') as input_file:
         # 漢字台本データの読み込み
-        array = input_file.read().split('\n') # 台本データを 1 次元配列に格納
+        lines = input_file.readlines()
 
-        for i in range(0, int(list_row)):
-            file_index = i + 1
-
+        for line in lines:
+            name, text = line.replace('\n', '').split(':')
+            
             # 出力ファイル名を設定
-            output_path = f"{output_dir}/{file_index:04}.txt"
+            output_path = f"{output_dir}/{name}.txt"
 
             # 台本をローマ字に変換
-            roma = poj.g2p(array[i], kana=False)
+            roma = poj.g2p(text, kana=False)
             # julius と pyopenjtalk とで動作が異なる記号の変換
             roma = roma.replace('pau', 'sp').replace('cl', 'q').replace('v', 'b')
             # ローマ字台本 (小文字) データの書き出し
@@ -40,4 +40,4 @@ def func(list_row, input_path, output_dir):
                 output_file.write(roma.lower()) # 書き出し
 
 if __name__ == '__main__':
-    func(sys.argv[1], sys.argv[2], sys.argv[3])
+    func(sys.argv[1], sys.argv[2])

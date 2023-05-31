@@ -21,18 +21,20 @@ import sys
 import librosa
 import soundfile as sf
 
-def func(list_row, input_dir, output_dir):
-    for i in range(0, int(list_row)):
-        file_index = i + 1
+def func(input_path, input_dir, output_dir, sr=16000):
+    with open(input_path, mode='r') as f:
+        lines = f.readlines()
+        for i, line in enumerate(lines):
+            name = line.split(':')[0]
 
-        # 入出力ファイル名を指定
-        input_path  = f"{input_dir}/BASIC5000_{file_index:04}.wav"
-        output_path = f"{output_dir}/{file_index:04}.wav"
-        
-        # sr: 16kHz, rate: 16bit の PCM 形式に音声を変換して出力
-        y, sr = librosa.core.load(input_path, sr=16000, mono=True)
-        sf.write(output_path, y, sr, subtype='PCM_16')
+            # 入出力ファイル名を指定
+            input_path  = f"{input_dir}/{name}.wav"
+            output_path = f"{output_dir}/{name}.wav"
+            
+            # sr: 16kHz, rate: 16bit の PCM 形式に音声を変換して出力
+            y, sr = librosa.core.load(input_path, sr=sr, mono=True)
+            sf.write(output_path, y, sr, subtype='PCM_16')
 
 
 if __name__ == '__main__':
-    func(sys.argv[1], sys.argv[2], sys.argv[3])
+    func(sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4]))
