@@ -49,7 +49,7 @@ DIR_OUTPUT_LABELS="${DIR_OUTPUT}/lab"
 DIR_OUTPUT_WAV="${DIR_OUTPUT}/wav"
 
 
-remove_dirs=( ${DIR_TEMP} ${DIR_SRC_JULIUS_BIN} ${DIR_SRC_SEGMENT_WAV} ${DIR_OUTPUT})
+remove_dirs=( ${DIR_TEMP} ${DIR_SRC_SEGMENT_WAV} ${DIR_OUTPUT})
 for dir in ${remove_dirs[@]}; do rm -rf ${dir}; done
 
 create_dirs=( \
@@ -87,13 +87,13 @@ then
 fi
 
 
-echo 'step 0: julius のビルド'
-cp -RT ${DIR_SRC_JULIUS_SOURCE} ${DIR_SRC_JULIUS_BIN}
-(
-    cd ${DIR_SRC_JULIUS_BIN}
-    ./configure >>  ${DIR_TEMP_LOG_FILE[0]} 2>&1
-    make >>         ${DIR_TEMP_LOG_FILE[1]} 2>&1
-)
+# echo 'step 0: julius のビルド'
+# cp -RT ${DIR_SRC_JULIUS_SOURCE} ${DIR_SRC_JULIUS_BIN}
+# (
+#     cd ${DIR_SRC_JULIUS_BIN}
+#     ./configure >>  ${DIR_TEMP_LOG_FILE[0]} 2>&1
+#     make >>         ${DIR_TEMP_LOG_FILE[1]} 2>&1
+# )
 
 
 echo "step 1: コーパス -> 時間情報なしフルコンテキストラベル"
